@@ -2,4 +2,4 @@
 - name: Reboot the system
   ansible.builtin.reboot:
     reboot_timeout: 10
-  msg: "The reboot process will complete in 10 seconds.."
+    msg: "The reboot process will complete in 10 seconds.."
