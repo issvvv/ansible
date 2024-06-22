@@ -1,0 +1,7 @@
+---
+- name: Update and reboot your hosts
+  hosts: all
+  become: yes
+  roles:
+    - upgrade-packages
+    - reboot
