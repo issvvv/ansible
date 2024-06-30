@@ -1,2 +1,8 @@
 ---
-# - include: ...
+- include_tasks: minikube-dependencies-apt.yml
+  when: ansible_facts['os_family'] in ['Debian']
+
+- include_tasks: minikube-dependencies-dnf.yml
+  when: ansible_facts['os_family'] in ['RedHat', 'CentOS']
+
+- include_tasks:

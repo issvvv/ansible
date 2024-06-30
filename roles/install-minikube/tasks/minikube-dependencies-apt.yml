@@ -1,0 +1,14 @@
+---
+- name: Update APT package index
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install required packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificate
+      - curl
+      - software-properties-common
+      - conntrack
+    state: present

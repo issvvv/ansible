@@ -1,6 +1,6 @@
 ---
-- include: apt-upgrade.yml
+- include_tasks: apt-upgrade.yml
   when: ansible_facts['os_family'] in ['Debian'] 
 
-- include: dnf-upgrade.yml
+- include_tasks: dnf-upgrade.yml
   when: ansible_facts['os_family'] in ['RedHat', 'CentOS']
