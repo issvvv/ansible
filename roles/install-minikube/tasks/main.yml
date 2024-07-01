@@ -5,4 +5,4 @@
 - include_tasks: minikube-dependencies-dnf.yml
   when: ansible_facts['os_family'] in ['RedHat', 'CentOS']
 
-- include_tasks:
+#- include_tasks:

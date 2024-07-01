@@ -1,2 +1,3 @@
 # Ansible-config
 ansible.cfg
+minikube-dependencies-dnf.yml
