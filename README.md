@@ -2,9 +2,8 @@
 
 This repository contains some useful Ansible-playbooks.
 
-__Ansible__ is an open-source automation tool that simplifies provisioning, configuration management, and application deployment. 
-It uses a declarative language to describe system configurations and orchestrates tasks across multiple systems. 
-Ansible is agentless, utilizing SSH for communication, making it easy to set up and use.
+__Ansible__ is an open-source automation tool that simplifies provisioning, configuration management and application deployment. 
+It uses a declarative language to describe system configurations and orchestrates tasks across multiple systems.
 
 In this repository, you can find several useful Ansible playbooks.
 
