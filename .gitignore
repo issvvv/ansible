@@ -1,5 +1,4 @@
 # Ansible configuration files
-ansible.cfg
 ssh-ansible*
 
 # Some things that not ready yet
