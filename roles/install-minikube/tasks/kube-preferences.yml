@@ -22,35 +22,12 @@
 - name: Create systemd service file for kubectl
   ansible.builtin.copy:
     dest: /etc/systemd/system/kubectl.service
-    content: |
-      [Unit]
-      Description=Kubernetes Command Line Tool
-      After=network.target
-
-      [Service]
-      ExecStart=/usr/local/bin/kubectl
-      Restart=always
-      RestartSec=10
-
-      [Install]
-      WantedBy=multi-user.target
+    content: "{{ kubectl_service_content }}"
 
 - name: Create systemd service for minikube
   ansible.builtin.copy:
     dest: /etc/systemd/system/minikube.service
-    content: |
-      [Unit]
-      Description=Minikube
-      After=network.target
-
-      [Service]
-      ExecStart=/usr/local/bin/minikube start --vm-driver=docker --force
-      ExecStop=/usr/local/bin/minikube stop
-      Restart=always
-      RestartSec=10
-
-      [Install]
-      WantedBy=multi-user.target
+    content: "{{ minikube_service_content }}"
 
 - name: Start and enable Kubectl service
   ansible.builtin.systemd:
@@ -63,4 +40,3 @@
     name: minikube
     state: started
     enabled: true
-

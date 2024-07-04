@@ -2,3 +2,30 @@
 docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
 kubectl_repo: https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl
 minikube_repo: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+
+minikube_service_content: |
+  [Unit]
+  Description=Minikube
+  After=network.target
+
+  [Service]
+  ExecStart=/usr/local/bin/minikube start --vm-driver=docker --force
+  ExecStop=/usr/local/bin/minikube stop
+  Restart=always
+  RestartSec=10
+
+  [Install]
+  WantedBy=multi-user.target
+
+kubectl_service_content: |
+  [Unit]
+  Description=Kubernetes Command Line Tool
+  After=network.target
+
+  [Service]
+  ExecStart=/usr/local/bin/kubectl
+  Restart=always
+  RestartSec=10
+
+  [Install]
+  WantedBy=multi-user.target
