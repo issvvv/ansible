@@ -3,7 +3,7 @@ ansible.cfg
 ssh-ansible*
 
 # Some things that not ready yet
-roles/install-minikube/tasks/dnf-dependencies.yml
+#
 
-# Test roles/playbooks/etc
+# Test roles, playbooks, etc.
 */test

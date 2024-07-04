@@ -7,4 +7,6 @@
 
 - include_tasks: docker-preferences.yml
 
+- include_tasks: kube-install.yml
+
 - include_tasks: kube-preferences.yml
