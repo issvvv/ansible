@@ -15,21 +15,21 @@ _**Note**: You need to specify the addresses of the required hosts in inventory.
 
 To get started, clone this repository:
 
-'''shell
-git clone https://link.ru/sex.git && cd ansible/
-'''
+```shell
+git clone https://github.com/issvvv/ansible.git && cd ansible/
+```
 
 Place your SSH key in the root of the Ansible repository:
 
-'''shell
+```shell
 mv /path/to/your/ssh-ansible .
-'''
+```
 
 Navigate to the playbook directory and do what you need!
 For example, run the minikube installation on your host:
 
-'''shell
+```shell
 ansible-playbook ./playbooks/minikube-installation.yml
-'''
+```
 
 Enjoy! ✨
