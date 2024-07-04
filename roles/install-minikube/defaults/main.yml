@@ -1,3 +1,4 @@
 ---
 docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
 kubectl_repo: https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl
+minikube_repo: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64

@@ -1,0 +1,66 @@
+---
+- name: Inform about download process
+  ansible.builtin.debug:
+    msg: "Downloading kubectl and minikube binaries. This may take up to 10 minutes."
+
+- name: Download kubectl and minikube binary
+  ansible.builtin.shell: |
+    curl -Lo kubectl "{{ kubectl_repo }}"
+    curl -Lo minikube "{{ minikube_repo }}"
+  args:
+    chdir: /usr/local/bin
+
+- name: Make it executable
+  ansible.builtin.file: 
+    dest=/usr/local/bin/kubectl mode=a+x
+    dest=/usr/local/bin/minikube mode=a+x
+
+- name: Configure minikube
+  ansible.builtin.shell: |
+    minikube start --vm-driver=docker --force
+
+- name: Create systemd service file for kubectl
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/kubectl.service
+    content: |
+      [Unit]
+      Description=Kubernetes Command Line Tool
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/kubectl
+      Restart=always
+      RestartSec=10
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Create systemd service for minikube
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/minikube.service
+    content: |
+      [Unit]
+      Description=Minikube
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/minikube start --vm-driver=docker --force
+      ExecStop=/usr/local/bin/minikube stop
+      Restart=always
+      RestartSec=10
+
+      [Install]
+      WantedBy=multi-user.target
+
+- name: Start and enable Kubectl service
+  ansible.builtin.systemd:
+    name: kubectl
+    state: started
+    enabled: true
+
+- name: Start and enable Minikube service
+  ansible.builtin.systemd:
+    name: minikube
+    state: started
+    enabled: true
+

@@ -1,3 +1,9 @@
-# Ansible-config
+# Ansible configuration files
 ansible.cfg
-minikube-dependencies-dnf.yml
+ssh-ansible*
+
+# Some things that not ready yet
+roles/install-minikube/tasks/dnf-dependencies.yml
+
+# Test roles/playbooks/etc
+*/test

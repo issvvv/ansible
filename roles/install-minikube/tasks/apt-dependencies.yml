@@ -1,0 +1,33 @@
+---
+- name: Update package index
+  ansible.builtin.package:
+    update_cache: true
+
+- name: Install required packages
+  ansible.builtin.package:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - conntrack
+      - docker.io
+    state: present
+
+- name: Inform about download process
+  debug:
+    msg: "Downloading kubectl and minikube binaries. This may take up to 10 minutes."
+
+- name: Download kubectl and minikube binary
+  shell: |
+    curl -Lo kubectl "{{ kubectl_repo }}"
+    curl -Lo minikube "{{ minikube_repo }}"
+  args:
+    chdir: /usr/local/bin
+
+- name: Make it executable
+  file: 
+    dest=/usr/local/bin/kubectl mode=a+x
+    dest=/usr/local/bin/minikube mode=a+x
+
+
