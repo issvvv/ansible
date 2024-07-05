@@ -1,5 +1,4 @@
 ---
-
 - name: Check if minikube exists
   ansible.builtin.stat:
     path: "{{ minikube_path }}"
