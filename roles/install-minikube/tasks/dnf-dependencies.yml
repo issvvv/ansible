@@ -13,4 +13,7 @@
     name:
       - yum-utils
       - dnf-plugins-core
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
     state: present

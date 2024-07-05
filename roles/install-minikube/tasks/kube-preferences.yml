@@ -5,7 +5,7 @@
 
 - name: Configure minikube
   ansible.builtin.shell: |
-    minikube start --vm-driver="{{ minikube_vm_driver }}" "{{ minicube_stable_parameters }}"
+    minikube start --vm-driver="{{ minikube_vm_driver }}" "{{ minikube_stable_parameters }}"
 
 - name: Create systemd service file for kubectl
   ansible.builtin.copy:

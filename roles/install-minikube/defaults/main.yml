@@ -1,8 +1,11 @@
 ---
 # Some repositories
 docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
-kubectl_repo: "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"
+kubectl_repo: "https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl"
 minikube_repo: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
+
+kubectl_path: "/usr/bin/kubectl"
+minikube_path: "/usr/bin/minikube"
 
 # Minikube parameters you can change depending on your host configuration
 minikube_vm_driver: "docker"

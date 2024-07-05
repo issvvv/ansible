@@ -2,7 +2,7 @@
 
 - name: Check if minikube exists
   ansible.builtin.stat:
-    path: /usr/local/bin/minikube
+    path: "{{ minikube_path }}"
   register: minikube_existion
 
 - name: Ask handler to install minikube if not exists
@@ -13,7 +13,7 @@
 
 - name: Check if kubectl exists
   ansible.builtin.stat:
-    path: /usr/local/bin/kubectl
+    path: "{{ kubectl_path }}"
   register: kubectl_existion
 
 - name: Ask handler to install kubectl if not exists
