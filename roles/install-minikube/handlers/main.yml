@@ -1,0 +1,14 @@
+---
+- name: Install minikube
+  ansible.builtin.shell: |
+    curl -Lo minikube "{{ minikube_repo }}"
+    chmod +x /usr/local/bin/minikube
+  args:
+    creates: /usr/local/bin/minikube
+
+- name: Install kubectl
+  ansible.builtin.shell: |
+    curl -Lo "{{ kubectl_repo }}"
+    chmod +x /usr/local/bin/kubectl
+  args:
+    creates: /usr/local/bin/kubectl

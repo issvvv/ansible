@@ -1,16 +1,23 @@
 ---
-- name: Inform about download process
-  debug:
-    msg: "Downloading kubectl and minikube binaries. This may take up to 10 minutes."
 
-- name: Download kubectl and minikube binary
-  shell: |
-    curl -Lo kubectl "{{ kubectl_repo }}"
-    curl -Lo minikube "{{ minikube_repo }}"
-  args:
-    chdir: /usr/local/bin
+- name: Check if minikube exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/minikube
+  register: minikube_existion
 
-- name: Make it executable
-  file: 
-    dest=/usr/local/bin/kubectl mode=a+x
-    dest=/usr/local/bin/minikube mode=a+x
+- name: Ask handler to install minikube if not exists
+  ansible.builtin.debug: 
+    msg: "Minikube not installed, this may take some time."
+  when: not minikube_existion.stat.exists
+  notify: Install minikube
+
+- name: Check if kubectl exists
+  ansible.builtin.stat:
+    path: /usr/local/bin/kubectl
+  register: kubectl_existion
+
+- name: Ask handler to install kubectl if not exists
+  ansible.builtin.debug:
+    msg: "Kubectl not installed, this may take some time."
+  when: not kubectl_existion.stat.exists
+  notify: Install kubectl

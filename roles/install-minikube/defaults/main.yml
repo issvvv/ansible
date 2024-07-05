@@ -1,15 +1,21 @@
 ---
-docker_repo: https://download.docker.com/linux/centos/docker-ce.repo
-kubectl_repo: https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl
-minikube_repo: https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+# Some repositories
+docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
+kubectl_repo: "https://dl.k8s.io/release/`curl -LS https://dl.k8s.io/release/stable.txt`/bin/linux/amd64/kubectl"
+minikube_repo: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
 
+# Minikube parameters you can change depending on your host configuration
+minikube_vm_driver: "docker"
+minikube_stable_parameters: "--force --memory=1900mb --ports=8443:8443"
+
+# Minikube config for systemd
 minikube_service_content: |
   [Unit]
   Description=Minikube
   After=network.target
 
   [Service]
-  ExecStart=/usr/local/bin/minikube start --vm-driver=docker --force
+  ExecStart=/usr/local/bin/minikube start "{{ minikube_stable_parameters }}"
   ExecStop=/usr/local/bin/minikube stop
   Restart=always
   RestartSec=10
@@ -17,6 +23,7 @@ minikube_service_content: |
   [Install]
   WantedBy=multi-user.target
 
+# Kubectl config for systemd
 kubectl_service_content: |
   [Unit]
   Description=Kubernetes Command Line Tool
