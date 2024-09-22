@@ -9,7 +9,7 @@ minikube_path: "/usr/bin/minikube"
 
 # Minikube parameters you can change depending on your host configuration
 minikube_vm_driver: "docker"
-minikube_stable_parameters: "--force --memory=1900mb --ports=8443:8443"
+minikube_stable_parameters: "--force --memory=1900mb --ports=8443:8443 --network=bridge"
 
 # Minikube config for systemd
 minikube_service_content: |
