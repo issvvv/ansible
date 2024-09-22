@@ -8,8 +8,8 @@ kubectl_path: "/usr/bin/kubectl"
 minikube_path: "/usr/bin/minikube"
 
 # Minikube parameters you can change depending on your host configuration
-minikube_vm_driver: "docker"
-minikube_stable_parameters: "--force --memory=1900mb --ports=8443:8443 --network=bridge"
+minikube_vm_driver: "docker" # Not even use it, now it's in {{ minikube_stable_parameters }}
+minikube_stable_parameters: "--force --vm-driver=docker --memory=1900mb --ports=8443:8443 --network=bridge"
 
 # Minikube config for systemd
 minikube_service_content: |
@@ -18,7 +18,7 @@ minikube_service_content: |
   After=network.target
 
   [Service]
-  ExecStart=/usr/local/bin/minikube start "{{ minikube_stable_parameters }}"
+  ExecStart=/usr/local/bin/minikube start {{ minikube_stable_parameters }}
   ExecStop=/usr/local/bin/minikube stop
   Restart=always
   RestartSec=10
