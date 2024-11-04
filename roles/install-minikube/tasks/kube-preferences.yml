@@ -1,4 +1,14 @@
 ---
+- name: Create systemd service file for kubectl
+  ansible.builtin.copy:
+    dest: "{{ systemd_config_path }}/kubectl.service"
+    content: "{{ kubectl_service_content }}"
+
+- name: Create systemd service for minikube
+  ansible.builtin.copy:
+    dest: "{{ systemd_config_path }}/minikube.service"
+    content: "{{ minikube_service_content }}"
+
 - name: Inform about minikube configuring
   debug:
     msg: "Configuring minikube. This may take time depending on your connection speed."
@@ -6,16 +16,6 @@
 - name: Configure minikube
   ansible.builtin.shell: |
     minikube start {{ minikube_stable_parameters }}
-
-- name: Create systemd service file for kubectl
-  ansible.builtin.copy:
-    dest: /etc/systemd/system/kubectl.service
-    content: "{{ kubectl_service_content }}"
-
-- name: Create systemd service for minikube
-  ansible.builtin.copy:
-    dest: /etc/systemd/system/minikube.service
-    content: "{{ minikube_service_content }}"
 
 - name: Start and enable Kubectl service
   ansible.builtin.systemd:
