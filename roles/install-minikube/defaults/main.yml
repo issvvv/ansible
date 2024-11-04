@@ -9,8 +9,8 @@ minikube_path: "/usr/bin/minikube"
 systemd_config_path: "/etc/systemd/system"
 
 # Minikube parameters you can change depending on your host configuration
-minikube_vm_driver: "docker" # Not even use it, now it's in {{ minikube_stable_parameters }}
 minikube_stable_parameters: "--force --vm-driver=docker --memory=1900mb --ports=8443:8443 --network=bridge"
+minikube_start_parameters: "--force --wait=all"
 
 # Minikube config for systemd
 minikube_service_content: |
@@ -19,7 +19,7 @@ minikube_service_content: |
   After=network.target
 
   [Service]
-  ExecStart={{ minikube_path }} start {{ minikube_stable_parameters }}
+  ExecStart={{ minikube_path }} start {{ minikube_start_parameters }}
   ExecStop={{ minikube_path }} stop
   Restart=always
   RestartSec=10
