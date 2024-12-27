@@ -1,8 +1,2 @@
 # Ansible configuration files
 ssh-ansible*
-
-# Some things that not ready yet
-#
-
-# Test roles, playbooks, etc.
-*/test

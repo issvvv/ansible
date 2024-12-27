@@ -1,0 +1,11 @@
+[Unit]
+Description=Kubernetes Command Line Tool
+After=network.target
+
+[Service]
+ExecStart={{ kubectl_path }}
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

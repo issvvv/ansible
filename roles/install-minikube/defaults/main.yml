@@ -4,6 +4,7 @@ docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
 kubectl_repo: "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
 minikube_repo: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
 
+# Service destination & systemd paths
 kubectl_path: "/usr/bin/kubectl"
 minikube_path: "/usr/bin/minikube"
 systemd_config_path: "/etc/systemd/system"
@@ -11,32 +12,3 @@ systemd_config_path: "/etc/systemd/system"
 # Minikube parameters you can change depending on your host configuration
 minikube_stable_parameters: "--force --vm-driver=docker --memory=1900mb --ports=8443:8443 --network=bridge"
 minikube_start_parameters: "--force --wait=all"
-
-# Minikube config for systemd
-minikube_service_content: |
-  [Unit]
-  Description=Minikube
-  After=network.target
-
-  [Service]
-  ExecStart={{ minikube_path }} start {{ minikube_start_parameters }}
-  ExecStop={{ minikube_path }} stop
-  Restart=always
-  RestartSec=10
-
-  [Install]
-  WantedBy=multi-user.target
-
-# Kubectl config for systemd
-kubectl_service_content: |
-  [Unit]
-  Description=Kubernetes Command Line Tool
-  After=network.target
-
-  [Service]
-  ExecStart={{ kubectl_path }}
-  Restart=always
-  RestartSec=10
-
-  [Install]
-  WantedBy=multi-user.target

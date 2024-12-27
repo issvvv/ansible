@@ -1,13 +1,23 @@
 ---
+# - name: Create systemd service file for kubectl
+#   ansible.builtin.copy:
+#     dest: "{{ systemd_config_path }}/kubectl.service"
+#     content: "{{ kubectl_service_content }}"
+
+# - name: Create systemd service for minikube
+#   ansible.builtin.copy:
+#     dest: "{{ systemd_config_path }}/minikube.service"
+#     content: "{{ minikube_service_content }}"
+
 - name: Create systemd service file for kubectl
-  ansible.builtin.copy:
-    dest: "{{ systemd_config_path }}/kubectl.service"
-    content: "{{ kubectl_service_content }}"
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/kubectl.service.j2"
+    dest: "{{ kubectl_service_content }}"
 
 - name: Create systemd service for minikube
-  ansible.builtin.copy:
+  ansible.builtin.template:
+    src: "{{ role_path }}/templates/minikube.service.j2"
     dest: "{{ systemd_config_path }}/minikube.service"
-    content: "{{ minikube_service_content }}"
 
 - name: Inform about minikube configuring
   debug:

@@ -1,0 +1,12 @@
+[Unit]
+Description=Minikube
+After=network.target
+
+[Service]
+ExecStart={{ minikube_path }} start {{ minikube_start_parameters }}
+ExecStop={{ minikube_path }} stop
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
