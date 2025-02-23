@@ -1,10 +1,5 @@
 ---
 
-- name: Create systemd service file for kubectl
-  ansible.builtin.template:
-    src: "{{ role_path }}/templates/kubectl.service.j2"
-    dest: "{{ kubectl_service_content }}"
-
 - name: Create systemd service for minikube
   ansible.builtin.template:
     src: "{{ role_path }}/templates/minikube.service.j2"
@@ -17,12 +12,6 @@
 - name: Configure minikube
   ansible.builtin.shell: |
     minikube start {{ minikube_stable_parameters }}
-
-- name: Start and enable Kubectl service
-  ansible.builtin.systemd:
-    name: kubectl
-    state: started
-    enabled: true
 
 - name: Start and enable Minikube service
   ansible.builtin.systemd:

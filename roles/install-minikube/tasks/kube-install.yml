@@ -5,19 +5,21 @@
     path: "{{ minikube_path }}"
   register: minikube_existion
 
-- name: Ask handler to install minikube if not exists
-  ansible.builtin.debug: 
-    msg: "Minikube not installed, this may take some time."
+- name: Install minikube
+  ansible.builtin.get_url:
+    url: "{{ minikube_repo }}"
+    dest: "{{ minikube_path }}"
+    mode: '0755'
   when: not minikube_existion.stat.exists
-  notify: Install minikube
 
 - name: Check if kubectl exists
   ansible.builtin.stat:
     path: "{{ kubectl_path }}"
   register: kubectl_existion
 
-- name: Ask handler to install kubectl if not exists
-  ansible.builtin.debug:
-    msg: "Kubectl not installed, this may take some time."
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "{{ kubectl_repo }}"
+    dest: "{{ kubectl_path }}"
+    mode: '0755'
   when: not kubectl_existion.stat.exists
-  notify: Install kubectl
