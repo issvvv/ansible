@@ -2,6 +2,7 @@
 - name: Update package index
   ansible.builtin.package:
     update_cache: true
+  become: true
 
 - name: Install required packages
   ansible.builtin.package:
@@ -13,3 +14,4 @@
       - conntrack
       - docker.io
     state: present
+  become: true

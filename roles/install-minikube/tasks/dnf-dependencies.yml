@@ -7,6 +7,7 @@
 - name: Update package cache
   ansible.builtin.package:
     update_cache: true
+  become: true
 
 - name: Ensure yum-utils and dnf-plugins-core are installed
   ansible.builtin.package:
@@ -17,3 +18,4 @@
       - docker-ce-cli
       - containerd.io
     state: present
+  become: true

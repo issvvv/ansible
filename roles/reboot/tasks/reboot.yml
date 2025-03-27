@@ -3,3 +3,4 @@
   ansible.builtin.reboot:
     reboot_timeout: 20
     msg: "The reboot process will complete in 10 seconds.."
+  become: true

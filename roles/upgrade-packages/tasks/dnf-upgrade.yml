@@ -1,9 +1,6 @@
 ---
 - name: Running "dnf update"
   ansible.builtin.dnf:
-    update_cache: true
-    
-- name: Running "dnf upgrade"
-  ansible.builtin.dnf:
     name: "*"
     state: latest
+  become: true

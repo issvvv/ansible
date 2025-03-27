@@ -11,6 +11,7 @@
     dest: "{{ minikube_path }}"
     mode: '0755'
   when: not minikube_existion.stat.exists
+  become: true
 
 - name: Check if kubectl exists
   ansible.builtin.stat:
@@ -23,3 +24,4 @@
     dest: "{{ kubectl_path }}"
     mode: '0755'
   when: not kubectl_existion.stat.exists
+  become: true
