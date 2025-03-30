@@ -2,4 +2,4 @@
 - name: minikube installation
   hosts: minikube
   roles:
-    - install-minikube
+    - install_minikube

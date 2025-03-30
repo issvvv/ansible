@@ -1,5 +1,0 @@
----
-- name: k3s installation
-  hosts: k3s
-  roles:
-    - install-k3s

@@ -1,2 +1,6 @@
 # Ansible configuration files
 ssh-ansible*
+
+# For a time
+roles/install_k3s
+playbooks/k3s-install.yml
