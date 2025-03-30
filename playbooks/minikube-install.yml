@@ -1,5 +1,5 @@
 ---
-- name: minikube installation
+- name: Minikube installation
   hosts: minikube
   roles:
     - install_minikube
