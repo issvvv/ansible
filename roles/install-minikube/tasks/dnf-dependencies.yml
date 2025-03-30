@@ -1,6 +1,6 @@
 ---
 - name: Add Docker repository
-  get_url:
+  ansible.builtin.get_url:
     url: "{{ docker_repo }}"
     dest: /etc/yum.repos.d/docker-ce.repo
 
