@@ -28,7 +28,7 @@ Navigate to the playbook directory and do what you need!
 For example, run the minikube installation on your host:
 
 ```shell
-ansible-playbook ./playbooks/minikube-installation.yml
+ansible-playbook ./playbooks/minikube-install.yml
 ```
 
 Enjoy! ✨

@@ -9,6 +9,7 @@
 
 - name: Setup docker preferences
   ansible.builtin.include_tasks: docker-preferences.yml
+  when: vm_driver in ['docker', 'none']
 
 - name: Install services
   ansible.builtin.include_tasks: kube-install.yml

@@ -6,12 +6,16 @@
 
 - name: Install required packages
   ansible.builtin.package:
-    name:
-      - apt-transport-https
-      - ca-certificates
-      - curl
-      - software-properties-common
-      - conntrack
-      - docker.io
+    name: >
+      {{
+        [
+          'apt-transport-https',
+          'ca-certificates',
+          'curl',
+          'software-properties-common',
+          'conntrack'
+        ]
+        + ([ 'docker.io' ] if vm_driver in ['docker','none'] else [])
+      }}
     state: present
   become: true

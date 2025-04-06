@@ -10,5 +10,18 @@ minikube_path: "/usr/bin/minikube"
 systemd_config_path: "/etc/systemd/system"
 
 # Minikube parameters you can change depending on your host configuration
-minikube_stable_parameters: "--force --vm-driver=docker --memory=1900mb --ports=8443:8443 --network=bridge"
+
+#TODO: this one allows you to choose between "none" & "docker" at the moment
+vm_driver: "docker"
+
+minikube_stable_parameters: >
+  "--force \
+  --driver={{ vm_driver }} \
+  --memory=1900mb \
+  --ports=8443:8443 \
+  --ports=80:80 \
+  --ports=443:443 \
+  --network=bridge \
+  --apiserver-ips={{ ansible_default_ipv4.address }}"
+
 minikube_start_parameters: "--force --wait=all"

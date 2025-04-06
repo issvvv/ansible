@@ -11,8 +11,8 @@
     msg: "Configuring minikube. This may take time depending on your connection speed."
 
 - name: Configure minikube
-  ansible.builtin.shell: |
-    minikube start {{ minikube_stable_parameters }}
+  ansible.builtin.command:
+    cmd: "minikube start {{ minikube_stable_parameters }}"
 
 - name: Start and enable Minikube service
   ansible.builtin.systemd:
