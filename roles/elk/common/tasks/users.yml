@@ -1,0 +1,13 @@
+---
+- name: Common | Set facts about service users based on host group
+  ansible.builtin.set_fact:
+    service_user: >-
+      {% if 'dashboards' in group_names %}{{ dashboards_service_user }}
+      {% elif 'logstash' in group_names %}{{ logstash_service_user }}
+      {% elif 'elasticsearch' in group_names %}{{ elasticsearch_service_user }}
+
+- name: Common | Create service users
+  ansible.builtin.user:
+    name: {{ service_user }}
+    create_home: no
+  become: true

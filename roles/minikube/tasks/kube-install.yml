@@ -1,0 +1,27 @@
+---
+
+- name: Check if minikube exists
+  ansible.builtin.stat:
+    path: "{{ minikube_path }}"
+  register: minikube_existion
+
+- name: Install minikube
+  ansible.builtin.get_url:
+    url: "{{ minikube_repo }}"
+    dest: "{{ minikube_path }}"
+    mode: '0755'
+  when: not minikube_existion.stat.exists
+  become: true
+
+- name: Check if kubectl exists
+  ansible.builtin.stat:
+    path: "{{ kubectl_path }}"
+  register: kubectl_existion
+
+- name: Install kubectl
+  ansible.builtin.get_url:
+    url: "{{ kubectl_repo }}"
+    dest: "{{ kubectl_path }}"
+    mode: '0755'
+  when: not kubectl_existion.stat.exists
+  become: true

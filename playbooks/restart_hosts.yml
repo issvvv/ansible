@@ -1,0 +1,6 @@
+---
+- name: Update and reboot your hosts
+  hosts: all
+  ansible.builtin.include_role:
+    - restart_hosts
+  become: false

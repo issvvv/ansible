@@ -1,0 +1,14 @@
+---
+- name: Common | Be sure swap is disabled
+  ansible.builtin.command: 
+    cmd: "swapoff -a"
+  changed_when: false
+  become: true
+
+- name: Common | Be sure swap is removed from /etc/fstab
+  ansible.builtin.lineinfile:
+    path: /etc/fstab
+    regexp: '.*\sswap\s.*'
+    state: absent
+    backup: true
+  become: true

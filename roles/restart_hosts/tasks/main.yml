@@ -1,4 +1,5 @@
 ---
 - name: Reboot system
-  ansible.builtin.include_tasks: reboot.yml
+  ansible.builtin.include_tasks: 
+    file: reboot.yml
   when: ansible_facts['os_family'] in ['Debian', 'RedHat', 'CentOS']

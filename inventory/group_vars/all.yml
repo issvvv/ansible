@@ -1,0 +1,6 @@
+---
+# Global variables
+fqdn_base: "home.local"
+
+files_dir: "{{ inventory_dir }}/../../files"
+certificates_dir: "{{ files_dir }}/certificates"
