@@ -27,5 +27,5 @@ jobs:
             Repository: [pussyboy](https://github.com/${{ github.repository }})
             Branch: ${{ github.ref }}
             Author: ${{ github.actor }}
-            Lint Job Status: ${{ needs.lint-ansible.result }}
+            Lint Job Status: ${{ job.status }}
           format: markdown
