@@ -24,7 +24,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           message: |
             🛠️ Ansible Lint Status:
-            Repository: [pussyboy](https://github.com/${{ github.repository }})
+            Repository: [${{ github.repository }})](https://github.com/${{ github.repository }})
             Branch: ${{ github.ref }}
             Author: ${{ github.actor }}
             Lint Job Status: ${{ job.status }}
