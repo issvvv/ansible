@@ -1,0 +1,8 @@
+---
+- name: Restart Opensearch Dashboards
+  ansible.builtin.systemd:
+    name: opensearch-dashboards.service
+    state: restarted
+    enabled: true
+  listen: restart_dashboards
+  become: true

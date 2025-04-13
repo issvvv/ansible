@@ -1,1 +1,24 @@
 ---
+############################################################
+### Opensearch Dashboards ##################################
+
+# Service version
+opensearch_dashboards_version: "2.17.1"
+
+# Local service accounts
+opensearch_dashboards_service_user: "dashboards"
+opensearch_dashboards_service_group: "dashboards"
+
+############################################################
+### Elasticsearch ##########################################
+
+# Local service accounts
+elasticsearch_service_user: "elastic"
+elasticsearch_service_group: "elastic"
+
+############################################################
+### Logstash ###############################################
+
+# Local service accounts
+logstash_service_user: "logstash"
+logstash_service_group: "logstash"
