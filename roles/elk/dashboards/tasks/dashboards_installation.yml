@@ -39,12 +39,15 @@
         group: "{{ opensearch_dashboards_service_group }}"
     
     - name: Dashboards Installation | Extract SSL certificates
-      ansible.builtin.file:
-        src: #TODO
-        dest: "/etc/opensearch-dashboards/ssl"
+      ansible.builtin.copy:
+        src: "elk/{{ item }}"
+        dest: "/etc/opensearch-dashboards/ssl/{{ item }}"
         mode: '0644'
         owner: "{{ opensearch_dashboards_service_user }}"
         group: "{{ opensearch_dashboards_service_group }}"
+      loop:
+        - dashboards.crt
+        - dashboards.key
 
   notify: restart_dashboards
   become: true
