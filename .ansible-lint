@@ -1,3 +1,9 @@
 skip_list:
   - role-name
   - file-permissions
+
+rules:
+  risky-shell-pipe: error
+  command-instead-of-module: warning
+
+parseable_errors: true

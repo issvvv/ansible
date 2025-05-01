@@ -2,7 +2,9 @@
 
 server.port: 5601
 server.host: "{{ hostvars[inventory_hostname] ['ip'] }}"
-opensearch.hosts: ["{{ opensearch_dashboards_nodes }}"]
+opensearch.hosts: ["{{ elasticsearch_master_nodes }}"]
+opensearch.username: "admin"
+opensearch.password: "admin" #TODO – i dont like it, there might be some alternatives
 
 opensearch.ssl.verificationMode: certificate
 server.ssl.enabled: true
