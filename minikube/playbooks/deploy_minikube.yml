@@ -1,6 +1,6 @@
 ---
 - name: Minikube installation
-  hosts: {{ host_group | default(omit) }}
+  hosts: minikube
   ansible.builtin.include_role:
     - minikube
   become: false
