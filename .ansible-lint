@@ -5,5 +5,3 @@ skip_list:
 rules:
   risky-shell-pipe: error
   command-instead-of-module: warning
-
-parseable_errors: true
