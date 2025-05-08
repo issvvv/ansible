@@ -1,6 +1,7 @@
 ---
 - name: Minikube installation
-  hosts: minikube
-  ansible.builtin.include_role:
-    - minikube
   become: false
+  hosts: minikube
+  gather_facts: true
+  roles:
+    - kibibub
