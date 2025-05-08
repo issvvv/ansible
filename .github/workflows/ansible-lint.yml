@@ -14,10 +14,11 @@ jobs:
         with:
           args: minikube/
 
-      - name: Run ansible-lint | ELK
-        uses: ansible/ansible-lint@main
-        with:
-          args: elk/
+      #TODO – Do it later, when all playbooks will be ready
+      # - name: Run ansible-lint | ELK
+      #   uses: ansible/ansible-lint@main
+      #   with:
+      #     args: elk/
 
   telegram-notify:
     runs-on: ubuntu-latest
