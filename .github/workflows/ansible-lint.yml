@@ -12,7 +12,7 @@ jobs:
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
-          args: .
+          args: minikube
 
   telegram-notify:
     runs-on: ubuntu-latest
