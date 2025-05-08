@@ -4,4 +4,4 @@
   hosts: minikube
   gather_facts: true
   roles:
-    - kibibub
+    - minikube
