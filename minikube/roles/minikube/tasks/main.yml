@@ -1,11 +1,11 @@
 ---
 - name: Install apt packages
-  ansible.builtin.include_tasks: 
+  ansible.builtin.include_tasks:
     file: apt-dependencies.yml
   when: ansible_facts['os_family'] in ['Debian']
 
 - name: Install dnf packages
-  ansible.builtin.include_tasks: 
+  ansible.builtin.include_tasks:
     file: dnf-dependencies.yml
   when: ansible_facts['os_family'] in ['RedHat', 'CentOS']
 
