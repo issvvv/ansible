@@ -9,14 +9,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run ansible-lint
+      - name: Run ansible-lint | Minikube
         uses: ansible/ansible-lint@main
         with:
-          args: .
+          args: minikube/
+
+      #TODO – Do it later, when all playbooks will be ready
+      # - name: Run ansible-lint | ELK
+      #   uses: ansible/ansible-lint@main
+      #   with:
+      #     args: elk/
 
   telegram-notify:
     runs-on: ubuntu-latest
     needs: ansible-lint
+    if: always()
     steps:
       - name: Send telegram notification
         uses: appleboy/telegram-action@master
