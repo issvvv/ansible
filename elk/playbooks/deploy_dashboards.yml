@@ -1,0 +1,7 @@
+---
+- name: Deploy Opensearch Dashboards
+  become: false
+  hosts: dashboard
+  gather_facts: true
+  roles:
+    - elk/dashboards

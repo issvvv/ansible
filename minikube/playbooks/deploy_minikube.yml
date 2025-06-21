@@ -1,0 +1,7 @@
+---
+- name: Minikube installation
+  become: false
+  hosts: minikube
+  gather_facts: true
+  roles:
+    - minikube

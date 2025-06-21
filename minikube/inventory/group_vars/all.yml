@@ -1,0 +1,21 @@
+---
+# Global variables
+base_fqdn: "home.local"
+
+files_dir: "{{ inventory_dir }}/../../files"
+certificates_dir: "{{ files_dir }}/certificates"
+
+# Minikube parameters you can change depending on your host configuration
+
+#TODO: this one allows you to choose between "none" & "docker" at the moment
+vm_driver: "none"
+
+minikube_stable_parameters: >
+  "--force \
+  --driver={{ vm_driver }} \
+  --memory=1900mb \
+  --ports=8443:8443 \
+  --ports=80:80 \
+  --ports=443:443 \
+  --network=bridge \
+  --apiserver-ips={{ ansible_default_ipv4.address }}"

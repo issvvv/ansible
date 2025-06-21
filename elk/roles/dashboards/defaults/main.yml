@@ -1,0 +1,9 @@
+---
+
+opensearch_dashboards_distribution_repository: "https://artifacts.opensearch.org/releases/bundle"
+opensearch_dashboards_installation_dir: "/opt"
+
+elasticsearch_master_nodes: |-
+  {% for item in groups ['elasticsearch-master-node'] -%}
+    "{{ hostvars[item]['ip'] }}"{{% if not loop.last -%}}","{% endif %}
+  {% endfor %}

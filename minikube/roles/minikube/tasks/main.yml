@@ -1,0 +1,23 @@
+---
+- name: Install apt packages
+  ansible.builtin.include_tasks:
+    file: apt-dependencies.yml
+  when: ansible_facts['os_family'] in ['Debian']
+
+- name: Install dnf packages
+  ansible.builtin.include_tasks:
+    file: dnf-dependencies.yml
+  when: ansible_facts['os_family'] in ['RedHat', 'CentOS']
+
+- name: Setup docker preferences
+  ansible.builtin.include_tasks:
+    file: docker-preferences.yml
+  when: vm_driver in ['docker', 'none']
+
+- name: Install services
+  ansible.builtin.include_tasks:
+    file: kube-install.yml
+
+- name: Set preferences
+  ansible.builtin.include_tasks:
+    file: kube-preferences.yml
