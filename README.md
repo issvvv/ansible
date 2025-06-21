@@ -1,3 +1,5 @@
+![Ansible Lint](https://github.com/issvvv/ansible/actions/workflows/ansible-lint.yml/badge.svg)
+
 # Ansible
 
 This monorepo contains some useful Ansible-playbooks.
