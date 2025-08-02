@@ -1,0 +1,13 @@
+---
+redis_server_version: "7.4.5"
+redis_server_package_name: "redis-{{ redis_server_version }}.tar.gz"
+redis_server_download_url: "https://download.redis.io/releases/{{ redis_server_package_name }}"
+
+# Redis instance type: sentinel — with failover support; cluster — sharded Redis cluster; standalone — single-node server.
+redis_server_instance_type: "standalone"
+redis_server_protected_mode: true
+
+redis_server_root_dir: "/opt/redis"
+
+redis_server_service_user: "redis"
+redis_server_service_group: "redis"

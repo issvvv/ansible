@@ -1,0 +1,23 @@
+---
+all:
+
+# Global vars
+  vars:
+    ansible_port: 22
+
+  children:
+
+    redis:
+      children:
+
+        redis_master:
+          hosts:
+            redis01.home.local:
+              ansible_host: 192.168.1.101
+
+        redis_slave:
+          hosts:
+            redis02.home.local:
+              ansible_host: 192.168.1.102
+            redis03.home.local:
+              ansible_host: 192.168.1.103

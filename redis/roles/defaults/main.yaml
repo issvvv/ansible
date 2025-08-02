@@ -1,0 +1,29 @@
+---
+#########################################################################################
+### REDIS ###############################################################################
+
+redis_server_service_port: "{{ ('6379' if redis_server_instance_type in ['cluster', 'standalone']) or ('26379' if redis_server_instance_type == 'sentinel') }}"
+
+redis_server_tmp_dir: "/tmp/redis"
+redis_server_instance_dir: "{{ redis_server_root_dir }}/redis-{{ redis_server_version }}"
+redis_server_data_dir: "{{ redis_server_root_dir }}/data"
+redis_server_bin_dir: "{{ redis_server_root_dir }}/bin"
+redis_server_log_dir: "{{ redis_server_root_dir }}/log"
+
+redis_server_build_dependencies_packages:
+  - gcc
+  - make
+  - tcl
+
+#########################################################################################
+### FIREWALLD ###########################################################################
+
+redis_server_firewalld_ports:
+  - "{{ redis_server_service_port }}/tcp"
+
+redis_server_directories:
+  - "{{ redis_server_root_dir }}"
+  - "{{ redis_server_data_dir }}"
+  - "{{ redis_server_bin_dir }}"
+  - "{{ redis_server_log_dir }}"
+  - "{{ redis_server_tmp_dir }}"

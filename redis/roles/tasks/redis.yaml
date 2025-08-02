@@ -1,0 +1,108 @@
+---
+- name: Prerequests | Create working directories
+  become: true
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ redis_server_service_user }}"
+    group: "{{ redis_server_service_group }}"
+    mode: '0755'
+  loop: "{{ redis_server_directories }}"
+
+- name: Prerequests | Update Redis service version
+  block:
+    - name: Pull Redis archive
+      become: true
+      become_user: "{{ redis_server_service_user }}"
+      ansible.builtin.get_url:
+        url: "{{ redis_server_download_url }}"
+        dest: "{{ redis_server_tmp_dir }}"
+        url_username: "{{ nexus_docker_user }}"
+        url_password: "{{ nexus_docker_pass }}"
+      when:
+        - not redis_server_is_installed.stat.exists or
+          redis_server_version not in redis_server_current_version
+
+    - name: Stop current Redis service
+      become: true
+      ansible.builtin.service:
+        name: redis-server.service
+        state: stopped
+      when:
+        - redis_server_is_installed.stat.exists and
+          (redis_server_version not in redis_server_current_version or redis_server_instance_type not in redis_server_previous_instance_type.stdout)
+
+    - name: Delete existing Redis instance if exists
+      become: true
+      ansible.builtin.file:
+        path: "{{ redis_server_instance_dir }}/{{ item }}"
+        state: absent
+      with_fileglob:
+        - "{{ redis_server_instance_dir + '/*' }}"
+      when:
+        - redis_server_is_installed.stat.exists or
+          redis_server_version not in redis_server_current_version
+
+    - name: Unarchive pulled Redis archive
+      become: true
+      become_user: "{{ redis_server_service_user }}"
+      ansible.builtin.unarchive:
+        src: "{{ redis_server_tmp_dir }}/{{ redis_server_package_name }}"
+        dest: "{{ redis_server_root_dir }}"
+        remote_src: true
+      when:
+        - not redis_server_is_installed.stat.exists or
+          redis_server_version not in redis_server_current_version
+
+    - name: Build Redis binaries
+      become: true
+      become_user: "{{ redis_server_service_user }}"
+      community.general.make:
+        chdir: "{{ redis_server_instance_dir }}"
+        target: install
+        params:
+          PREFIX: "{{ redis_server_root_dir }}"
+      when:
+        - not redis_server_is_installed.stat.exists or
+          redis_server_version not in redis_server_current_version
+
+- name: Config | Template service config depend on service type
+  become: true
+  ansible.builtin.template:
+    src: "{{ 'config/redis.conf.j2' if redis_server_instance_type in ['cluster', 'standalone'] else
+          'config/sentinel.conf.j2' if redis_server_instance_type == 'sentinel' }}"
+    dest: "{{ redis_server_instance_dir }}/{{ 'redis.conf' if redis_server_instance_type in ['cluster', 'standalone'] else
+          'sentinel.conf' if redis_server_instance_type == 'sentinel' }}"
+    owner: "{{ redis_server_service_user }}"
+    group: "{{ redis_server_service_group }}"
+    mode: '0640'
+  notify: restart_redis_service
+
+- name: Systemd | Template Redis systemd unit file
+  become: true
+  ansible.builtin.template:
+    src: "redis-server.service.j2"
+    dest: "/etc/systemd/system/redis-server.service"
+    owner: root
+    group: root
+    mode: '0644'
+  notify: restart_redis_service
+
+- name: Logrotate | Configure Redis logrotate config
+  become: true
+  ansible.builtin.template:
+    src: logrotate/redis.j2
+    dest: /etc/logrotate.d/redis
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Helper | Template Redis instance info file
+  become: true
+  become_user: "{{ redis_server_service_user }}"
+  ansible.builtin.template:
+    src: "current_instance_type.txt.j2"
+    dest: "{{ redis_server_root_dir }}/current_instance_type.txt"
+    owner: "{{ redis_server_service_user }}"
+    group: "{{ redis_server_service_group }}"
+    mode: '0644'

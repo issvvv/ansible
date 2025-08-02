@@ -1,0 +1,21 @@
+# MANAGED BY ANSIBLE
+
+[Unit]
+Description=Redis
+After=network.target
+
+[Service]
+{% if redis_server_instance_type == 'sentinel' %}
+ExecStart={{ redis_server_bin_dir }}/redis-server {{ redis_server_instance_dir }}/sentinel.conf
+{% elif redis_server_instance_type in ['cluster', 'standalone'] %}
+ExecStart={{ redis_server_bin_dir }}/redis-server {{ redis_server_instance_dir }}/redis.conf
+{% else %}
+ExecStart=/bin/false
+{% endif %}
+Restart=on-failure
+RestartSec=5s
+User={{ redis_server_service_user }}
+Group={{ redis_server_service_group }}
+
+[Install]
+WantedBy=multi-user.target

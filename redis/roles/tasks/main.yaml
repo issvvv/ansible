@@ -1,0 +1,38 @@
+---
+- name: Redis | Service installation
+  block:
+    - name: Setting facts about current environment
+      ansible.builtin.include_tasks:
+        file: facts.yaml
+      tags: ['linux', 'check', 'always']
+
+    - name: Setup firewalld
+      ansible.builtin.include_tasks:
+        file: firewalld.yaml
+      tags: ['linux', 'firewalld', 'always']
+
+    - name: Create service user
+      ansible.builtin.include_tasks:
+        file: users.yaml
+      tags: ['linux', 'user']
+
+    - name: Setup Redis service
+      ansible.builtin.include_tasks:
+        file: redis.yaml
+      tags: ['linux', 'redis']
+
+  always:
+    - name: Remove temporary files
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ redis_server_tmp_dir }}"
+
+    - name: Remove build dependencies
+      become: true
+      ansible.builtin.package:
+        name: "{{ redis_server_build_dependencies_packages }}"
+        state: absent
+      when: redis_server_build_dependencies_packages | length > 0

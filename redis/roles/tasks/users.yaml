@@ -1,0 +1,18 @@
+---
+- name: Create service group
+  become: true
+  ansible.builtin.group:
+    name: "{{ redis_server_service_group }}"
+    state: present
+    system: true
+  when: redis_server_service_group != "root"
+
+- name: Create service user
+  become: true
+  ansible.builtin.user:
+    name: "{{ redis_server_service_user }}"
+    group: "{{ redis_server_service_group }}"
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+  when: redis_server_service_user != "root"

@@ -1,0 +1,10 @@
+# MANAGED BY ANSIBLE
+
+{{ redis_server_log_dir }}/redis.log {
+    daily
+    rotate 14
+    compress
+    missingok
+    notifempty
+    copytruncate
+}
