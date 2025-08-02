@@ -1,0 +1,29 @@
+---
+- name: Reload firewalld
+  become: true
+  ansible.builtin.systemd_service:
+    name: firewalld.service
+    state: reloaded
+  listen: reload_firewalld
+  when:
+    - ansible_facts.services["firewalld.service"] is defined
+    - ansible_facts.services["firewalld.service"].state == "running"
+
+- name: Restart Redis
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: redis-server.service
+    state: restarted
+    enabled: true
+  listen: restart_redis_service
+
+- name: Restart Redis Sentinel
+  become: true
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: redis-sentinel.service
+    state: restarted
+    enabled: true
+  when: redis_server_sentinel_enabled | bool
+  listen: restart_redis_sentinel_service

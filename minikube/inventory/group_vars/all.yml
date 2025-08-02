@@ -7,7 +7,7 @@ certificates_dir: "{{ files_dir }}/certificates"
 
 # Minikube parameters you can change depending on your host configuration
 
-#TODO: this one allows you to choose between "none" & "docker" at the moment
+# TODO: this one allows you to choose between "none" & "docker" at the moment
 vm_driver: "none"
 
 minikube_stable_parameters: >

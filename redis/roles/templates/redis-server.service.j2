@@ -1,0 +1,15 @@
+# MANAGED BY ANSIBLE
+
+[Unit]
+Description=Redis
+After=network.target
+
+[Service]
+User={{ redis_server_service_user }}
+Group={{ redis_server_service_group }}
+ExecStart={{ redis_server_bin_dir }}/redis-server {{ redis_server_instance_dir }}/redis.conf
+ExecStop={{ redis_server_bin_dir }}/redis-cli shutdown
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

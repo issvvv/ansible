@@ -1,0 +1,17 @@
+---
+- name: Playbook for Redis binary deploy
+  hosts: "{{ host_group | default(omit) }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+    - name: Check variable definition
+      ansible.builtin.assert:
+        that: "{{ item }} is defined"
+        fail_msg: "Have to specify {{ item }} variable"
+      loop:
+        - host_group
+
+    - name: Redis | Including Redis binary setup role
+      ansible.builtin.include_role:
+        name: redis

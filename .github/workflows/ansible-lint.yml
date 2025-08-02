@@ -5,20 +5,17 @@ on: [push, pull_request]
 jobs:
   ansible-lint:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [minikube, redis]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run ansible-lint | Minikube
+      - name: Run ansible-lint
         uses: ansible/ansible-lint@main
         with:
-          args: minikube/
-
-      #TODO – Do it later, when all playbooks will be ready
-      # - name: Run ansible-lint | ELK
-      #   uses: ansible/ansible-lint@main
-      #   with:
-      #     args: elk/
+          args: ${{ matrix.project }}/
 
   telegram-notify:
     runs-on: ubuntu-latest

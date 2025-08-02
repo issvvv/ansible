@@ -11,5 +11,5 @@ all:
     minikube:
       hosts:
         kube01.home.local:
-          #ansible_host: 192.168.1.100
+          # ansible_host: 192.168.1.100
           ansible_host: 10.10.1.10
