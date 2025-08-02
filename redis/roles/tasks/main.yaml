@@ -24,7 +24,7 @@
     - name: Check service availability
       ansible.builtin.include_tasks:
         file: healthcheck.yaml
-      tags: ['linux','redis', 'healthcheck']
+      tags: ['linux', 'redis', 'healthcheck']
 
   always:
     - name: Remove temporary files

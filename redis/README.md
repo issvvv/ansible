@@ -1,5 +1,22 @@
 ![Ansible Lint](https://github.com/issvvv/ansible/actions/workflows/ansible-lint.yml/badge.svg)
 
+```text
+                XXXXX                                                                  
+           XXXXX;+++xXXXXX                                          XX  XX             
+      XXXXXXXXx;;; :;xXXXXXXXXX                                    Xxx  XxX            
+  XXXXXx.     .+XXxXXXXXX$$$$XXXXX                                 XxX                 
+  XXXXXXXX+;+XXXXXXx+XXXXXXXXXXXXX      XxXXxXXX XXxXXxX     XxXXxXXxX  XXX  XXxXXXX   
+  XXXXXXXXXXXXx:.  +XXXXXXXXXXXXX       xXxxXXXxxXxX XXXxX XXxxXXXXxXx  XxX xxXXXxxXX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      xXXX   XXXxXXxXxxXXxxX     XXx  XxX XxxXXxX    
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      Xxxx   XxXXXXXXXXxXXxX     XxX  XxX  XXxxXXxX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XxXX   XxxX    XX  XxxX   XxxX  XxX xXX   XxX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      XxX     XXxxXxxxX   XXxxXxXXXX  xXX XxxXXxxXX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       X          XX         XXX  X    X     XXX     
+   XXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                       
+       $XXXXXXXXXXXXXXXXXXX$                                                           
+            XXXXXXXXXXX                                                                
+                XXX                                                                    
+```
 # Redis Ansible Playbook
 
 This playbook automates the installation, configuration and management of Redis servers.
@@ -48,19 +65,51 @@ ansible-playbook playbooks/redis.yaml -e "host_group=redis"
 # Redis version
 redis_server_version: "7.4.5"
 
-# Redis installation type: cluster — sharded Redis cluster; standalone — single-node server.
-redis_server_instance_type: "cluster"
+# standalone — single-node server; replication — HA Redis with replication; cluster — sharded Redis cluster
+redis_server_instance_type: "replication"
 
-# Sentinel for high availability
+# You need it only if redis_server_instance_type is set to 'replication'
 redis_server_sentinel_enabled: true
 
 # Password protection
 redis_server_password: ""
  ```
 
-You can specify any scenarios, like clusterized Redis or single-node Redis with Sentinel _(why do you need that?..)_. 
+## 📋 Deployment examples
 
-By the way, it works! 😊
+1. Basic Redis Server (Standalone)
+```yaml
+redis_server_instance_type: "standalone"
+redis_server_sentinel_enabled: false
+```
+
+2. Basic Replication (Master + Replicas)
+```yaml
+redis_server_instance_type: "replication"
+redis_server_sentinel_enabled: false
+```
+
+3. High-Availability Redis (Master + Replicas + Sentinel)
+```yaml
+redis_server_instance_type: "replication"
+redis_server_sentinel_enabled: true
+```
+
+4. Redis Cluster (Sharded Data)
+```yaml
+redis_server_instance_type: "cluster"
+redis_server_sentinel_enabled: false
+```
+
+## ⚠️ Important Notes
+
+Redis Cluster Initialization (I'll do it later in code)
+After running the playbook with `redis_server_instance_type: "cluster"`, you need to manually initialize the cluster:
+
+```shell
+# Run this on just one of the cluster nodes
+redis-cli --cluster create ip1:6379 ip2:6379 ip3:6379 --cluster-replicas 1
+```
 
 ## 🙏 Help me!
 

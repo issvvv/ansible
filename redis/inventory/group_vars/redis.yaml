@@ -4,11 +4,11 @@ redis_server_version: "7.4.5"
 redis_server_package_name: "redis-{{ redis_server_version }}.tar.gz"
 redis_server_download_url: "https://download.redis.io/releases/{{ redis_server_package_name }}"
 
-# Redis installation type: cluster — sharded Redis cluster; standalone — single-node server.
+# Redis installation type:  standalone — single-node server; replication — HA Redis with replication; cluster — sharded Redis cluster.
 redis_server_instance_type: "standalone"
 redis_server_protected_mode: true
 
-# Sentinel for high availability
+# You need it only if redis_server_instance_type is set to 'replication'
 redis_server_sentinel_enabled: false
 
 # Password protection

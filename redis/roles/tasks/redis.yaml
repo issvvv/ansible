@@ -40,7 +40,7 @@
         enabled: false
       failed_when: false
       when:
-        - redis_server_is_installed.stat.exists and
+        - redis_server_is_installed.stat.exists or
           not redis_server_sentinel_enabled | bool
 
     - name: Delete existing Redis instance if exists
@@ -48,8 +48,7 @@
       ansible.builtin.file:
         path: "{{ redis_server_instance_dir }}/{{ item }}"
         state: absent
-      with_fileglob:
-        - "{{ redis_server_instance_dir + '/*' }}"
+      with_fileglob: "{{ redis_server_instance_dir + '/*' }}"
       when:
         - redis_server_is_installed.stat.exists and
           redis_server_version not in redis_server_current_version
@@ -98,6 +97,7 @@
         owner: "{{ redis_server_service_user }}"
         group: "{{ redis_server_service_group }}"
         mode: '0600'
+      when: redis_server_sentinel_enabled | bool
       notify: restart_redis_sentinel_service
 
 - name: Systemd | Template systemd unit files
@@ -120,6 +120,7 @@
         owner: root
         group: root
         mode: '0644'
+      when: redis_server_sentinel_enabled | bool
       notify: restart_redis_sentinel_service
 
 - name: Logrotate | Configure Redis logrotate config

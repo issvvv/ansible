@@ -16,3 +16,10 @@ cluster-enabled yes
 cluster-config-file nodes.conf
 cluster-node-timeout 5000
 {% endif %}
+
+{% if redis_server_instance_type == 'replication' and inventory_hostname in groups['redis_slave'] %}
+replicaof {{ hostvars[groups['redis_master'][0]].ansible_host }} {{ redis_server_service_port }}
+{% if redis_server_password is defined and redis_server_password %}
+masterauth {{ redis_server_password }}
+{% endif %}
+{% endif %}

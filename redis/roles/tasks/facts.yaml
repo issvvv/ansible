@@ -1,4 +1,11 @@
 ---
+- name: Verify configuration
+  ansible.builtin.assert:
+    that:
+      - redis_server_instance_type == 'replication'
+    fail_msg: "Wrong configuration: Sentinel is only compatible with 'replication' mode."
+  when: redis_server_sentinel_enabled | bool
+
 - name: Check if Redis is already installed
   ansible.builtin.stat:
     path: "{{ redis_server_root_dir }}"
@@ -17,10 +24,11 @@
 - name: Extract current Redis version
   ansible.builtin.set_fact:
     redis_server_current_version: "{{ redis_server_current_version_raw | regex_search('v=([0-9.+])', '\\1') }}"
+  when: redis_server_is_installed.stat.exists | bool
 
 - name: Check current Redis instance type
   ansible.builtin.set_fact:
-    redis_server_previous_instance_type: "{{ lookup('file', '{{ redis_server_instance_dir }}/instance_type.txt', errors='ignore') | trim }}"
+    redis_server_previous_instance_type: "{{ lookup('file', '{{ redis_server_root_dir }}/current_instance_type.txt', errors='ignore') | trim }}"
   when: redis_server_is_installed.stat.exists | bool
 
 - name: Info message about standalone installation
