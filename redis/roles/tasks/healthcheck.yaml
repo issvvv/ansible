@@ -1,0 +1,13 @@
+---
+- name: Be sure Redis is running
+  ansible.builtin.wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: "{{ redis_server_service_port }}"
+    timeout: 10
+
+- name: Be sure Redis Sentinel is running
+  ansible.builtin.wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: "{{ redis_server_sentinel_port }}"
+    timeout: 10
+  when: redis_server_sentinel_enabled | bool

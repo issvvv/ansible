@@ -9,7 +9,7 @@
     mode: '0755'
   loop: "{{ redis_server_directories }}"
 
-- name: Prerequests | Update Redis service version
+- name: Install | Update Redis service version
   block:
     - name: Pull Redis archive
       become: true
@@ -25,12 +25,23 @@
 
     - name: Stop current Redis service
       become: true
-      ansible.builtin.service:
+      ansible.builtin.systemd_service:
         name: redis-server.service
         state: stopped
       when:
         - redis_server_is_installed.stat.exists and
-          (redis_server_version not in redis_server_current_version or redis_server_instance_type not in redis_server_previous_instance_type.stdout)
+          redis_server_version not in redis_server_current_version
+
+    - name: Stop Redis Sentinel service
+      become: true
+      ansible.builtin.systemd_service:
+        name: redis-sentinel.service
+        state: stopped
+        enabled: false
+      failed_when: false
+      when:
+        - redis_server_is_installed.stat.exists and
+          not redis_server_sentinel_enabled | bool
 
     - name: Delete existing Redis instance if exists
       become: true
@@ -40,7 +51,7 @@
       with_fileglob:
         - "{{ redis_server_instance_dir + '/*' }}"
       when:
-        - redis_server_is_installed.stat.exists or
+        - redis_server_is_installed.stat.exists and
           redis_server_version not in redis_server_current_version
 
     - name: Unarchive pulled Redis archive
@@ -53,6 +64,7 @@
       when:
         - not redis_server_is_installed.stat.exists or
           redis_server_version not in redis_server_current_version
+      notify: restart_redis_service
 
     - name: Build Redis binaries
       become: true
@@ -66,33 +78,55 @@
         - not redis_server_is_installed.stat.exists or
           redis_server_version not in redis_server_current_version
 
-- name: Config | Template service config depend on service type
-  become: true
-  ansible.builtin.template:
-    src: "{{ 'config/redis.conf.j2' if redis_server_instance_type in ['cluster', 'standalone'] else
-          'config/sentinel.conf.j2' if redis_server_instance_type == 'sentinel' }}"
-    dest: "{{ redis_server_instance_dir }}/{{ 'redis.conf' if redis_server_instance_type in ['cluster', 'standalone'] else
-          'sentinel.conf' if redis_server_instance_type == 'sentinel' }}"
-    owner: "{{ redis_server_service_user }}"
-    group: "{{ redis_server_service_group }}"
-    mode: '0640'
-  notify: restart_redis_service
+- name: Config | Template service configs
+  block:
+    - name: Template Redis service config
+      become: true
+      ansible.builtin.template:
+        src: "config/redis.conf.j2"
+        dest: "{{ redis_server_instance_dir }}/redis.conf"
+        owner: "{{ redis_server_service_user }}"
+        group: "{{ redis_server_service_group }}"
+        mode: '0600'
+      notify: restart_redis_service
 
-- name: Systemd | Template Redis systemd unit file
-  become: true
-  ansible.builtin.template:
-    src: "redis-server.service.j2"
-    dest: "/etc/systemd/system/redis-server.service"
-    owner: root
-    group: root
-    mode: '0644'
-  notify: restart_redis_service
+    - name: Template Redis Sentinel config
+      become: true
+      ansible.builtin.template:
+        src: "config/sentinel.conf.j2"
+        dest: "{{ redis_server_instance_dir }}/sentinel.conf"
+        owner: "{{ redis_server_service_user }}"
+        group: "{{ redis_server_service_group }}"
+        mode: '0600'
+      notify: restart_redis_sentinel_service
+
+- name: Systemd | Template systemd unit files
+  block:
+    - name: Template Redis systemd unit file
+      become: true
+      ansible.builtin.template:
+        src: "redis-server.service.j2"
+        dest: "/etc/systemd/system/redis-server.service"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart_redis_service
+
+    - name: Template Redis Sentinel systemd unit file
+      become: true
+      ansible.builtin.template:
+        src: "redis-sentinel.service.j2"
+        dest: "/etc/systemd/system/redis-sentinel.service"
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart_redis_sentinel_service
 
 - name: Logrotate | Configure Redis logrotate config
   become: true
   ansible.builtin.template:
-    src: logrotate/redis.j2
-    dest: /etc/logrotate.d/redis
+    src: "logrotate/redis.j2"
+    dest: "/etc/logrotate.d/redis"
     owner: root
     group: root
     mode: '0644'
@@ -106,3 +140,6 @@
     owner: "{{ redis_server_service_user }}"
     group: "{{ redis_server_service_group }}"
     mode: '0644'
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

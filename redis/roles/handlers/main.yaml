@@ -25,5 +25,5 @@
     name: redis-sentinel.service
     state: restarted
     enabled: true
-  when: redis_server_instance_type == 'sentinel'
+  when: redis_server_sentinel_enabled | bool
   listen: restart_redis_sentinel_service

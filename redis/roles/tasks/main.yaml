@@ -19,7 +19,12 @@
     - name: Setup Redis service
       ansible.builtin.include_tasks:
         file: redis.yaml
-      tags: ['linux', 'redis']
+      tags: ['linux', 'redis', 'install']
+
+    - name: Check service availability
+      ansible.builtin.include_tasks:
+        file: healthcheck.yaml
+      tags: ['linux','redis', 'healthcheck']
 
   always:
     - name: Remove temporary files
