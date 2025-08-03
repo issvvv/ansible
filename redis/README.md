@@ -1,22 +1,24 @@
 ![Ansible Lint](https://github.com/issvvv/ansible/actions/workflows/ansible-lint.yml/badge.svg)
+[![Redis Docs](https://img.shields.io/badge/Redis-Docs-red?logo=redis)](https://redis.io/documentation/)
 
 ```text
                 XXXXX                                                                  
-           XXXXX;+++xXXXXX                                          XX  XX             
+           XXXXX;+++xXXXXX                                          Xx  XxX             
       XXXXXXXXx;;; :;xXXXXXXXXX                                    Xxx  XxX            
   XXXXXx.     .+XXxXXXXXX$$$$XXXXX                                 XxX                 
-  XXXXXXXX+;+XXXXXXx+XXXXXXXXXXXXX      XxXXxXXX XXxXXxX     XxXXxXXxX  XXX  XXxXXXX   
-  XXXXXXXXXXXXx:.  +XXXXXXXXXXXXX       xXxxXXXxxXxX XXXxX XXxxXXXXxXx  XxX xxXXXxxXX  
-  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      xXXX   XXXxXXxXxxXXxxX     XXx  XxX XxxXXxX    
+  XXXXXXXX+;+XXXXXXx+XXXXXXXXXXXXX      XxXXxXx  XXXXXxXx    XxXXxXXxX  XXX  XXxXXXX   
+  XXXXXXXXXXXXx:.  +XXXXXXXXXXXXX       xXxxXXXxxXXX  XXxX XXxxXXXXxXx  XxX xxXx  xXX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      xXXX   XXXxXxxXxxXXxxX     XXx  XxX XxxXXxX    
   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      Xxxx   XxXXXXXXXXxXXxX     XxX  XxX  XXxxXXxX  
-  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XxXX   XxxX    XX  XxxX   XxxX  XxX xXX   XxX  
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       XxXX   XxxX        XxxX   XxxX  XxX xX    XxX  
   XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX      XxX     XXxxXxxxX   XXxxXxXXXX  xXX XxxXXxxXX  
-  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       X          XX         XXX  X    X     XXX     
+  XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX       X         xXXX        XXXxxX   xXX    XXX     
    XXXXXXXXXXXXXXXXXXXXXXXXXXXXX                                                       
        $XXXXXXXXXXXXXXXXXXX$                                                           
             XXXXXXXXXXX                                                                
                 XXX                                                                    
 ```
+
 # Redis Ansible Playbook
 
 This playbook automates the installation, configuration and management of Redis servers.
