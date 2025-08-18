@@ -18,7 +18,7 @@
         url: "{{ redis_server_download_url }}"
         dest: "{{ redis_server_tmp_dir }}"
       when:
-        - not redis_server_is_installed.stat.exists or
+        - not redis_server_is_installed or
           redis_server_version not in redis_server_current_version
 
     - name: Stop current Redis service
@@ -27,7 +27,7 @@
         name: redis-server.service
         state: stopped
       when:
-        - redis_server_is_installed.stat.exists and
+        - redis_server_is_installed and
           redis_server_version not in redis_server_current_version
 
     - name: Stop Redis Sentinel service
@@ -38,7 +38,7 @@
         enabled: false
       failed_when: false
       when:
-        - redis_server_is_installed.stat.exists or
+        - redis_server_is_installed or
           not redis_server_sentinel_enabled | bool
 
     - name: Delete existing Redis instance if exists
@@ -48,7 +48,7 @@
         state: absent
       with_fileglob: "{{ redis_server_instance_dir + '/*' }}"
       when:
-        - redis_server_is_installed.stat.exists and
+        - redis_server_is_installed and
           redis_server_version not in redis_server_current_version
 
     - name: Unarchive pulled Redis archive
@@ -59,7 +59,7 @@
         dest: "{{ redis_server_root_dir }}"
         remote_src: true
       when:
-        - not redis_server_is_installed.stat.exists or
+        - not redis_server_is_installed or
           redis_server_version not in redis_server_current_version
       notify: restart_redis_service
 
@@ -72,7 +72,7 @@
         params:
           PREFIX: "{{ redis_server_root_dir }}"
       when:
-        - not redis_server_is_installed.stat.exists or
+        - not redis_server_is_installed or
           redis_server_version not in redis_server_current_version
 
 - name: Config | Template service configs
