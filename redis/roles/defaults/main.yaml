@@ -28,5 +28,5 @@ redis_server_build_dependencies_packages:
 
 redis_server_firewalld_ports:
   - "{{ redis_server_service_port }}/tcp"
-  - "{{ redis_server_service_port | int +10000 }}/tcp"
+  - "{{ redis_server_service_port | int + 10000 }}/tcp"
   - "{{ redis_server_sentinel_port }}/tcp"
