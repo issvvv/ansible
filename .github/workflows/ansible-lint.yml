@@ -33,7 +33,7 @@ jobs:
 
       - name: Run ansible-playbook in check mode
         run: |
-          ansible-playbook --check -i ${{ matrix.project }}/inventory ${{ matrix.project }}/playbooks/*.yaml
+          ansible-playbook --check -i localhost, -c local ${{ matrix.project }}/playbooks/*.yaml
 
   telegram-notify:
     runs-on: ubuntu-latest
