@@ -1,13 +1,24 @@
 ---
 - name: Prerequests | Create working directories
-  become: true
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ redis_server_service_user }}"
-    group: "{{ redis_server_service_group }}"
-    mode: '0755'
-  loop: "{{ redis_server_directories }}"
+  block:
+    - name: Create working directories
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ redis_server_service_user }}"
+        group: "{{ redis_server_service_group }}"
+        mode: '0755'
+      loop: "{{ redis_server_directories }}"
+
+    - name: Create users.acl file
+      become: true
+      ansible.builtin.file:
+        path: "{{ redis_server_data_dir }}/users.acl"
+        state: touch
+        owner: "{{ redis_server_service_user }}"
+        group: "{{ redis_server_service_group }}"
+        mode: '0640'
 
 - name: Install | Update Redis service version
   block:

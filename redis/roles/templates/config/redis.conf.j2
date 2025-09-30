@@ -9,6 +9,7 @@ dir {{ redis_server_data_dir }}
 requirepass {{ redis_server_password }}
 {% endif %}
 logfile {{ redis_server_log_dir }}/redis.log
+aclfile {{ redis_server_data_dir }}/users.acl
 appendonly yes
 
 {% if redis_server_instance_type == 'cluster' %}
