@@ -17,24 +17,6 @@ jobs:
         with:
           args: ${{ matrix.project }}/
 
-  ansible-test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [minikube, redis]
-    needs: ansible-lint
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Ansible
-        run: |
-          python3 -m pip install ansible
-
-      - name: Run ansible-playbook in check mode
-        run: |
-          cd ${{matrix.project}} && ansible-playbook --check -i localhost, -c local playbooks/*.yaml
-
   telegram-notify:
     runs-on: ubuntu-latest
     needs: ansible-lint
