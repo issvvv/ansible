@@ -30,8 +30,8 @@
         dest: "{{ defaults_redis_server_tmp_dir }}"
         mode: '0644'
       when:
-        - not redis_server_is_installed or
-          redis_server_version not in redis_server_current_version
+        - not tasks_redis_server_is_installed or
+          redis_server_version not in tasks_redis_server_current_version
 
     - name: Stop current Redis service
       become: true
@@ -39,8 +39,8 @@
         name: redis-server.service
         state: stopped
       when:
-        - redis_server_is_installed and
-          redis_server_version not in redis_server_current_version
+        - tasks_redis_server_is_installed and
+          redis_server_version not in tasks_redis_server_current_version
 
     - name: Stop Redis Sentinel service
       become: true
@@ -50,7 +50,7 @@
         enabled: false
       failed_when: false
       when:
-        - redis_server_is_installed or
+        - tasks_redis_server_is_installed or
           not redis_server_sentinel_enabled | bool
 
     - name: Delete existing Redis instance if exists
@@ -60,8 +60,8 @@
         state: absent
       with_fileglob: "{{ defaults_redis_server_instance_dir + '/*' }}"
       when:
-        - redis_server_is_installed and
-          redis_server_version not in redis_server_current_version
+        - tasks_redis_server_is_installed and
+          redis_server_version not in tasks_redis_server_current_version
 
     - name: Unarchive pulled Redis archive
       become: true
@@ -71,8 +71,8 @@
         dest: "{{ redis_server_root_dir }}"
         remote_src: true
       when:
-        - not redis_server_is_installed or
-          redis_server_version not in redis_server_current_version
+        - not tasks_redis_server_is_installed or
+          redis_server_version not in tasks_redis_server_current_version
       notify: restart_redis_service
 
     - name: Build Redis binaries
@@ -84,8 +84,8 @@
         params:
           PREFIX: "{{ redis_server_root_dir }}"
       when:
-        - not redis_server_is_installed or
-          redis_server_version not in redis_server_current_version
+        - not tasks_redis_server_is_installed or
+          redis_server_version not in tasks_redis_server_current_version
 
 - name: Config | Template service configs
   block:
