@@ -1,22 +1,22 @@
 ---
 # Some repositories
-docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
-kubectl_repo: "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
+minikube_docker_repo: "https://download.docker.com/linux/centos/docker-ce.repo"
+minikube_kubectl_repo: "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
 minikube_repo: "https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64"
 
 # Service destination & systemd paths
-kubectl_path: "/usr/bin/kubectl"
+minikube_kubectl_path: "/usr/bin/kubectl"
 minikube_path: "/usr/bin/minikube"
-systemd_config_path: "/etc/systemd/system"
+minikube_systemd_config_path: "/etc/systemd/system"
 
 # Minikube parameters you can change depending on your host configuration
 
 # TODO: this one allows you to choose between "none" & "docker" at the moment
-vm_driver: "docker"
+minikube_vm_driver: "docker"
 
 minikube_stable_parameters: >
   "--force \
-  --driver={{ vm_driver }} \
+  --driver={{ minikube_vm_driver }} \
   --memory=1900mb \
   --ports=8443:8443 \
   --ports=80:80 \

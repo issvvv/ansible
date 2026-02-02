@@ -12,7 +12,7 @@
 - name: Setup docker preferences
   ansible.builtin.include_tasks:
     file: docker-preferences.yml
-  when: vm_driver in ['docker', 'none']
+  when: minikube_vm_driver in ['docker', 'none']
 
 - name: Install services
   ansible.builtin.include_tasks:

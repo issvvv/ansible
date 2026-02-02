@@ -1,10 +1,10 @@
 ---
 - name: Add Docker repository
   ansible.builtin.get_url:
-    url: "{{ docker_repo }}"
+    url: "{{ minikube_docker_repo }}"
     dest: /etc/yum.repos.d/docker-ce.repo
     mode: '0644'
-  when: vm_driver ["docker", "none"]
+  when: minikube_vm_driver ["docker", "none"]
   become: true
 
 - name: Update package cache
@@ -20,7 +20,7 @@
           'yum-utils',
           'dnf-plugins-core'
         ]
-        + ([ 'docker-ce','docker-ce-cli', 'containerd.io' ] if vm_driver in ['docker','none'] else [])
+        + ([ 'docker-ce','docker-ce-cli', 'containerd.io' ] if minikube_vm_driver in ['docker','none'] else [])
       }}
     state: present
   become: true

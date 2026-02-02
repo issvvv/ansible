@@ -4,7 +4,7 @@
 
 - name: Check firewalld status
   ansible.builtin.set_fact:
-    firewalld_enabled: true
+    tasks_firewalld_enabled: true
   when:
     - ansible_facts.services["firewalld.service"] is defined
     - ansible_facts.services["firewalld.service"].state == "running"
@@ -16,6 +16,6 @@
     zone: public
     permanent: true
     state: enabled
-  loop: "{{ redis_server_firewalld_ports }}"
+  loop: "{{ defaults_redis_server_firewalld_ports }}"
   changed_when: true
-  when: firewalld_enabled | bool
+  when: tasks_firewalld_enabled | bool

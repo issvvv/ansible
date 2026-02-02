@@ -11,25 +11,25 @@
 
 - name: Check if Redis is already installed
   ansible.builtin.set_fact:
-    redis_server_is_installed: "{{ 'redis-server.service' in ansible_facts.services }}"
+    tasks_redis_server_is_installed: "{{ 'redis-server.service' in ansible_facts.services }}"
 
 - name: Check current Redis version
-  ansible.builtin.command: "{{ redis_server_bin_dir }}/redis-server --version"
+  ansible.builtin.command: "{{ defaults_redis_server_bin_dir }}/redis-server --version"
   changed_when: false
   failed_when: false
   check_mode: false
-  register: redis_server_current_version_raw
-  when: redis_server_is_installed
+  register: tasks_tasks_redis_server_current_version_raw
+  when: tasks_redis_server_is_installed
 
 - name: Extract current Redis version
   ansible.builtin.set_fact:
-    redis_server_current_version: "{{ redis_server_current_version_raw | regex_search('v=([0-9.+])', '\\1') }}"
-  when: redis_server_is_installed
+    tasks_redis_server_current_version: "{{ tasks_tasks_redis_server_current_version_raw | regex_search('v=([0-9.+])', '\\1') }}"
+  when: tasks_redis_server_is_installed
 
 - name: Check current Redis instance type
   ansible.builtin.set_fact:
-    redis_server_previous_instance_type: "{{ lookup('file', '{{ redis_server_root_dir }}/current_instance_type.txt', errors='ignore') | trim }}"
-  when: redis_server_is_installed
+    tasks_redis_server_previous_instance_type: "{{ lookup('file', '{{ redis_server_root_dir }}/current_instance_type.txt', errors='ignore') | trim }}"
+  when: tasks_redis_server_is_installed
 
 - name: Info message about standalone installation
   ansible.builtin.debug:
@@ -43,4 +43,4 @@
   become: true
   ansible.builtin.package:
     name: "{{ item }}"
-  with_items: "{{ redis_server_build_dependencies_packages }}"
+  with_items: "{{ defaults_redis_server_build_dependencies_packages }}"

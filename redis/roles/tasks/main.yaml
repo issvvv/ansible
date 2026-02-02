@@ -33,11 +33,11 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "{{ redis_server_tmp_dir }}"
+        - "{{ defaults_redis_server_tmp_dir }}"
 
     - name: Remove build dependencies
       become: true
       ansible.builtin.package:
-        name: "{{ redis_server_build_dependencies_packages }}"
+        name: "{{ defaults_redis_server_build_dependencies_packages }}"
         state: absent
-      when: redis_server_build_dependencies_packages | length > 0
+      when: defaults_redis_server_build_dependencies_packages | length > 0
