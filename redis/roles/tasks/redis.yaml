@@ -9,12 +9,12 @@
         owner: "{{ redis_server_service_user }}"
         group: "{{ redis_server_service_group }}"
         mode: '0755'
-      loop: "{{ redis_server_directories }}"
+      loop: "{{ defaults_redis_server_directories }}"
 
     - name: Create users.acl file
       become: true
       ansible.builtin.file:
-        path: "{{ redis_server_data_dir }}/users.acl"
+        path: "{{ defaults_redis_server_data_dir }}/users.acl"
         state: touch
         owner: "{{ redis_server_service_user }}"
         group: "{{ redis_server_service_group }}"
@@ -27,7 +27,8 @@
       become_user: "{{ redis_server_service_user }}"
       ansible.builtin.get_url:
         url: "{{ redis_server_download_url }}"
-        dest: "{{ redis_server_tmp_dir }}"
+        dest: "{{ defaults_redis_server_tmp_dir }}"
+        mode: '0644'
       when:
         - not redis_server_is_installed or
           redis_server_version not in redis_server_current_version
@@ -55,9 +56,9 @@
     - name: Delete existing Redis instance if exists
       become: true
       ansible.builtin.file:
-        path: "{{ redis_server_instance_dir }}/{{ item }}"
+        path: "{{ defaults_redis_server_instance_dir }}/{{ item }}"
         state: absent
-      with_fileglob: "{{ redis_server_instance_dir + '/*' }}"
+      with_fileglob: "{{ defaults_redis_server_instance_dir + '/*' }}"
       when:
         - redis_server_is_installed and
           redis_server_version not in redis_server_current_version
@@ -66,7 +67,7 @@
       become: true
       become_user: "{{ redis_server_service_user }}"
       ansible.builtin.unarchive:
-        src: "{{ redis_server_tmp_dir }}/{{ redis_server_package_name }}"
+        src: "{{ defaults_redis_server_tmp_dir }}/{{ redis_server_package_name }}"
         dest: "{{ redis_server_root_dir }}"
         remote_src: true
       when:
@@ -78,7 +79,7 @@
       become: true
       become_user: "{{ redis_server_service_user }}"
       community.general.make:
-        chdir: "{{ redis_server_instance_dir }}"
+        chdir: "{{ defaults_redis_server_instance_dir }}"
         target: install
         params:
           PREFIX: "{{ redis_server_root_dir }}"
@@ -92,7 +93,7 @@
       become: true
       ansible.builtin.template:
         src: "config/redis.conf.j2"
-        dest: "{{ redis_server_instance_dir }}/redis.conf"
+        dest: "{{ defaults_redis_server_instance_dir }}/redis.conf"
         owner: "{{ redis_server_service_user }}"
         group: "{{ redis_server_service_group }}"
         mode: '0600'
@@ -102,7 +103,7 @@
       become: true
       ansible.builtin.template:
         src: "config/sentinel.conf.j2"
-        dest: "{{ redis_server_instance_dir }}/sentinel.conf"
+        dest: "{{ defaults_redis_server_instance_dir }}/sentinel.conf"
         owner: "{{ redis_server_service_user }}"
         group: "{{ redis_server_service_group }}"
         mode: '0600'

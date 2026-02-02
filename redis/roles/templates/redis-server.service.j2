@@ -7,8 +7,8 @@ After=network.target
 [Service]
 User={{ redis_server_service_user }}
 Group={{ redis_server_service_group }}
-ExecStart={{ redis_server_bin_dir }}/redis-server {{ redis_server_instance_dir }}/redis.conf
-ExecStop={{ redis_server_bin_dir }}/redis-cli shutdown
+ExecStart={{ defaults_redis_server_bin_dir }}/redis-server {{ defaults_redis_server_instance_dir }}/redis.conf
+ExecStop={{ defaults_redis_server_bin_dir }}/redis-cli shutdown
 Restart=always
 
 [Install]

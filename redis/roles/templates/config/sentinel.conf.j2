@@ -1,12 +1,12 @@
 # MANAGED BY ANSIBLE
 
 bind 127.0.0.1 {{ ansible_default_ipv4.address }}
-port {{ redis_server_sentinel_port }}
+port {{ defaults_redis_server_sentinel_port }}
 protected-mode {{ 'yes' if redis_server_protected_mode | bool else 'no' }}
-dir {{ redis_server_data_dir }}
-logfile {{ redis_server_log_dir }}/sentinel.log
+dir {{ defaults_redis_server_data_dir }}
+logfile {{ defaults_redis_server_log_dir }}/sentinel.log
 
-sentinel monitor {{ hostvars[groups['redis_master'][0]].inventory_hostname }} {{ hostvars[groups['redis_master'][0]].ansible_host }} {{ redis_server_service_port }} 2
+sentinel monitor {{ hostvars[groups['redis_master'][0]].inventory_hostname }} {{ hostvars[groups['redis_master'][0]].ansible_host }} {{ defaults_redis_server_service_port }} 2
 sentinel down-after-milliseconds {{ hostvars[groups['redis_master'][0]].inventory_hostname }} 5000
 sentinel failover-timeout {{ hostvars[groups['redis_master'][0]].inventory_hostname }} 10000
 sentinel parallel-syncs {{ hostvars[groups['redis_master'][0]].inventory_hostname }} 1

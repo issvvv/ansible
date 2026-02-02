@@ -16,6 +16,6 @@
     zone: public
     permanent: true
     state: enabled
-  loop: "{{ redis_server_firewalld_ports }}"
+  loop: "{{ defaults_redis_server_firewalld_ports }}"
   changed_when: true
   when: firewalld_enabled | bool

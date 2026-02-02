@@ -3,7 +3,7 @@
 - name: Create systemd service for minikube
   ansible.builtin.template:
     src: "{{ role_path }}/templates/minikube.service.j2"
-    dest: "{{ systemd_config_path }}/minikube.service"
+    dest: "{{ minikube_systemd_config_path }}/minikube.service"
     mode: '0644'
   become: true
 

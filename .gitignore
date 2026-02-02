@@ -1,7 +1,5 @@
 # Ansible configuration files
+.ansible
 ssh-ansible*
 *.crt
 *.key
-
-# For a time
-roles/k3s

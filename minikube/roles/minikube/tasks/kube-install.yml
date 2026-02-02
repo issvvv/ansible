@@ -15,13 +15,13 @@
 
 - name: Check if kubectl exists
   ansible.builtin.stat:
-    path: "{{ kubectl_path }}"
+    path: "{{ minikube_kubectl_path }}"
   register: kubectl_existion
 
 - name: Install kubectl
   ansible.builtin.get_url:
-    url: "{{ kubectl_repo }}"
-    dest: "{{ kubectl_path }}"
+    url: "{{ minikube_kubectl_repo }}"
+    dest: "{{ minikube_kubectl_path }}"
     mode: '0755'
   when: not kubectl_existion.stat.exists
   become: true

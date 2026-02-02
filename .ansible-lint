@@ -1,7 +1,7 @@
-profile: basic
+profile: production
 verbosity: 0
 max_block_depth: 5
 
-skip_list:
+# skip_list:
   # Doesn't work with my current ansible-lint version
-  - var-naming
+  # - var-naming

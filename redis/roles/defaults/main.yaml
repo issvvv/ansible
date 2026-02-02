@@ -2,23 +2,23 @@
 #########################################################################################
 ### REDIS ###############################################################################
 
-redis_server_service_port: 6379
-redis_server_sentinel_port: 26379
+defaults_redis_server_service_port: 6379
+defaults_redis_server_sentinel_port: 26379
 
-redis_server_tmp_dir: "/tmp/redis"
-redis_server_instance_dir: "{{ redis_server_root_dir }}/redis-{{ redis_server_version }}"
-redis_server_data_dir: "{{ redis_server_root_dir }}/data"
-redis_server_bin_dir: "{{ redis_server_root_dir }}/bin"
-redis_server_log_dir: "{{ redis_server_root_dir }}/log"
+defaults_redis_server_tmp_dir: "/tmp/redis"
+defaults_redis_server_instance_dir: "{{ redis_server_root_dir }}/redis-{{ redis_server_version }}"
+defaults_redis_server_data_dir: "{{ redis_server_root_dir }}/data"
+defaults_redis_server_bin_dir: "{{ redis_server_root_dir }}/bin"
+defaults_redis_server_log_dir: "{{ redis_server_root_dir }}/log"
 
-redis_server_directories:
+defaults_redis_server_directories:
   - "{{ redis_server_root_dir }}"
-  - "{{ redis_server_data_dir }}"
-  - "{{ redis_server_bin_dir }}"
-  - "{{ redis_server_log_dir }}"
-  - "{{ redis_server_tmp_dir }}"
+  - "{{ defaults_redis_server_data_dir }}"
+  - "{{ defaults_redis_server_bin_dir }}"
+  - "{{ defaults_redis_server_log_dir }}"
+  - "{{ defaults_redis_server_tmp_dir }}"
 
-redis_server_build_dependencies_packages:
+defaults_redis_server_build_dependencies_packages:
   - gcc
   - make
   - tcl
@@ -26,7 +26,7 @@ redis_server_build_dependencies_packages:
 #########################################################################################
 ### FIREWALLD ###########################################################################
 
-redis_server_firewalld_ports:
-  - "{{ redis_server_service_port }}/tcp"
-  - "{{ redis_server_service_port | int + 10000 }}/tcp"
-  - "{{ redis_server_sentinel_port }}/tcp"
+defaults_redis_server_firewalld_ports:
+  - "{{ defaults_redis_server_service_port }}/tcp"
+  - "{{ defaults_redis_server_service_port | int + 10000 }}/tcp"
+  - "{{ defaults_redis_server_sentinel_port }}/tcp"

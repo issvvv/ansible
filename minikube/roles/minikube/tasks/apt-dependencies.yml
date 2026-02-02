@@ -15,7 +15,7 @@
           'software-properties-common',
           'conntrack'
         ]
-        + ([ 'docker.io' ] if vm_driver in ['docker','none'] else [])
+        + ([ 'docker.io' ] if minikube_vm_driver in ['docker','none'] else [])
       }}
     state: present
   become: true

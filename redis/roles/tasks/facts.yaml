@@ -14,7 +14,7 @@
     redis_server_is_installed: "{{ 'redis-server.service' in ansible_facts.services }}"
 
 - name: Check current Redis version
-  ansible.builtin.command: "{{ redis_server_bin_dir }}/redis-server --version"
+  ansible.builtin.command: "{{ defaults_redis_server_bin_dir }}/redis-server --version"
   changed_when: false
   failed_when: false
   check_mode: false
@@ -43,4 +43,4 @@
   become: true
   ansible.builtin.package:
     name: "{{ item }}"
-  with_items: "{{ redis_server_build_dependencies_packages }}"
+  with_items: "{{ defaults_redis_server_build_dependencies_packages }}"
