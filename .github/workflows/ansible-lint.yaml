@@ -32,7 +32,6 @@ jobs:
           message: |
             🛠️ Ansible Lint Status:
             Repository: [${{ github.repository }}](https://github.com/${{ github.repository }})
-            Workflow: ${{ github.event.workflow_run.name || github.workflow }}
             Triggered by: [${{ github.actor }}](https://github.com/${{ github.actor }})
-            Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            Status: ${{ needs.ansible-lint.result }}
+            Details: [${{ github.event.workflow_run.name || github.workflow }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            Status: **${{ needs.ansible-lint.result }}**
