@@ -1,7 +1,8 @@
 ---
-- name: Dashboards Installation | Download Opensearch Dashboards {{ opensearch_dashboards_version }}
+- name: Dashboards Installation | Download Opensearch Dashboards
   ansible.builtin.get_url:
-    url: "{{ opensearch_dashboards_distribution_repository }}/opensearch-dashboards/{{ opensearch_dashboards_version }}/opensearch-dashboards-{{ opensearch_dashboards_version }}-linux-x64.tar.gz"
+    #TODO - make it better
+    url: "{{ opensearch_dashboards_distribution_repository }}"
     dest: "/tmp/opensearch-dashbords-{{ opensearch_dashboards_version }}-linux-x64.tar.gz"
   become_user: "{{ opensearch_dashboards_service_user }}"
   become: true
@@ -11,8 +12,8 @@
     src: "/tmp/opensearch-dashbords-{{ opensearch_dashboards_version }}-linux-x64.tar.gz"
     dest: "{{ opensearch_dashboards_installation_dir }}"
     remote_src: true
+    mode: '0644'
   become_user: "{{ opensearch_dashboards_service_user }}"
-  become: true    
 
 - name: Dashboards Installation | Configure & setup service
   block:
