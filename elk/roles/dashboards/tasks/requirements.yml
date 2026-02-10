@@ -1,7 +1,0 @@
----
-- name: Requirements | Set open limit in /etc/sysctl.conf
-  ansible.posix.sysctl:
-    name: "fs.file-max"
-    value: "65536"
-    state: present
-  become: true

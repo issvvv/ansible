@@ -1,0 +1,14 @@
+---
+############################################################
+### Elasticsearch ##########################################
+
+# Local service accounts
+elasticsearch_service_user: "elastic"
+elasticsearch_service_group: "elastic"
+
+############################################################
+### Logstash ###############################################
+
+# Local service accounts
+logstash_service_user: "logstash"
+logstash_service_group: "logstash"

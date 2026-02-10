@@ -1,0 +1,18 @@
+---
+
+- name: Playbook for Opensearch Dashboards deploy
+  hosts: "{{ host_group | default(omit) }}"
+  gather_facts: true
+  become: false
+
+  tasks:
+    - name: Check variable definition
+      ansible.builtin.assert:
+        that: "{{ item }} is defined"
+        fail_msg: "Have to specify {{ item }} variable"
+      loop:
+        - host_group
+
+    - name: Opensearch Dashboards | Including Opensearch Dashboards setup role
+      ansible.builtin.include_role:
+        name: opensearch-dashboards

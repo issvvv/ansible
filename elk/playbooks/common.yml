@@ -1,7 +1,0 @@
----
-- name: Prepare hosts for ELK installation
-  hosts: {{ host_group | default(omit) }}
-  gather_facts: true
-  ansible.builtin.include_role:
-    name: elk/common
-  become: false

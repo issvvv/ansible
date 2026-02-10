@@ -1,0 +1,7 @@
+---
+############################################################
+### Logstash ###############################################
+
+# Local service accounts
+logstash_service_user: "logstash"
+logstash_service_group: "logstash"
