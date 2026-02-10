@@ -1,10 +1,10 @@
 ---
 - name: Requirements Installation
   ansible.builtin.include_tasks:
-    file: reqirements.yml
+    file: reqirements.yaml
   tags: ['linux', 'always', 'requirements']
 
 - name: Opensearch Dashboards Installation
   ansible.builtin.include_tasks:
-    file: dashboards_installation.yml
+    file: dashboards_installation.yaml
   tags: ['linux', 'always', 'dashboards_installation']
