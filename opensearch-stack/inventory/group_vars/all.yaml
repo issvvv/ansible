@@ -1,5 +1,7 @@
 ---
-# Global variables
+############################################################
+### Global Variables #######################################
+
 base_fqdn: "home.local"
 
 files_dir: "{{ inventory_dir }}/../../files"

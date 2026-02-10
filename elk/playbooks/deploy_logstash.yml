@@ -1,7 +1,0 @@
----
-- name: Deploy Logstash
-  hosts: {{ host_group | default(omit) }}
-  gather_facts: true
-  ansible.builtin.include_role:
-    name: elk/logstash
-  become: false
