@@ -34,4 +34,4 @@ jobs:
             Workflow: ${{ github.event.workflow_run.name || github.workflow }}
             Triggered by: [${{ github.actor }}](https://github.com/${{ github.actor }})
             Details: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-            Status: **${{ needs.ansible-lint.result == 'success' && '✅ PASSED' || '❌ FAILED' }}**
+            Status: ${{ needs.ansible-lint.result }}
