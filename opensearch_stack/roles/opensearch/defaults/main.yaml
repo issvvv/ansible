@@ -2,8 +2,7 @@
 #########################################################################################
 ### OPENSEARCH ##########################################################################
 
-# TODO
-opensearch_server_service_port: 1234
+opensearch_service_port: 9200
 
 opensearch_sysctl_vm_max_map_count: 262144
 
@@ -12,5 +11,5 @@ opensearch_server_tmp_dir: "/tmp/opensearch"
 #########################################################################################
 ### FIREWALLD ###########################################################################
 
-opensearch_server_firewalld_ports:
-  - "{{ opensearch_server_service_port }}/tcp"
+opensearch_firewalld_ports:
+  - "{{ opensearch_service_port }}/tcp"

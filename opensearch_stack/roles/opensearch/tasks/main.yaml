@@ -18,7 +18,7 @@
 
     - name: Opensearch installation
       ansible.builtin.include_tasks:
-        file: install.yaml
+        file: opensearch.yaml
       tags: ['linux', 'always', 'installation']
 
     - name: Check Opensearch service availability

@@ -1,0 +1,56 @@
+---
+- name: Prerequests | Create working directories
+  block:
+    - name: Create working directories
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: "{{ opensearch_service_user }}"
+        group: "{{ opensearch_service_group }}"
+        mode: '0755'
+      loop: "{{ opensearch_server_directories }}"
+
+- name: Install | Update Opensearch service version
+  block:
+    - name: Pull Opensearch archive
+      become: true
+      become_user: "{{ opensearch_service_user }}"
+      ansible.builtin.get_url:
+        url: "{{ opensearch_service_download_url }}"
+        dest: "{{ opensearch_server_tmp_dir }}"
+        mode: '0644'
+      when:
+        - not opensearch_service_is_installed or
+          opensearch_service_version not in opensearch_service_current_version
+
+    - name: Stop current Opensearch service
+      become: true
+      ansible.builtin.systemd_service:
+        name: opensearch.service
+        state: stopped
+      when:
+        - opensearch_service_is_installed and
+          opensearch_service_version not in opensearch_service_current_version
+
+    - name: Delete existing Opensearch instance if exists
+      become: true
+      ansible.builtin.file:
+        path: "{{ opensearch_server_instance_dir }}/{{ item }}"
+        state: absent
+      with_fileglob: "{{ opensearch_server_instance_dir + '/*' }}"
+      when:
+        - opensearch_service_is_installed and
+          opensearch_service_version not in opensearch_service_current_version
+
+    - name: Unarchive pulled Opensearch archive
+      become: true
+      become_user: "{{ opensearch_service_user }}"
+      ansible.builtin.unarchive:
+        src: "{{ opensearch_server_tmp_dir }}/{{ opensearch_service_package_name }}"
+        dest: "{{ opensearch_server_root_dir }}"
+        remote_src: true
+      when:
+        - not redis_service_is_installed or
+          redis_service_version not in redis_service_current_version
+      notify: restart_redis_service

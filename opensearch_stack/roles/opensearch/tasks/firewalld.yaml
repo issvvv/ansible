@@ -13,6 +13,6 @@
     zone: public
     permanent: true
     state: enabled
-  loop: "{{ opensearch_server_firewalld_ports }}"
+  loop: "{{ opensearch_firewalld_ports }}"
   changed_when: true
   when: opensearch_firewalld_enabled | bool
