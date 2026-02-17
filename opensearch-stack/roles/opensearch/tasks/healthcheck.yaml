@@ -1,0 +1,6 @@
+---
+- name: Be sure Opensearch is running
+  ansible.builtin.wait_for:
+    host: "{{ ansible_default_ipv4.address }}"
+    port: "{{ defaults_opensearch_server_service_port }}"
+    timeout: 10

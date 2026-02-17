@@ -1,14 +1,15 @@
 ---
 ############################################################
-### Elasticsearch ##########################################
+### Opensearch #############################################
 
-# Local service accounts
-elasticsearch_service_user: "elastic"
-elasticsearch_service_group: "elastic"
+### Service distribution
+opensearch_server_version: "3.5.0"
+opensearch_server_package_name: "opensearch-{{ redis_server_version }}-linux-x64.tar.gz"
+opensearch_server_download_url: "https://artifacts.opensearch.org/releases/bundle/opensearch/{{ opensearch_server_version }}/{{ opensearch_server_package_name }}"
 
-############################################################
-### Logstash ###############################################
+### Opensearch service installation directory
+opensearch_server_root_dir: "/opt/opensearch"
 
-# Local service accounts
-logstash_service_user: "logstash"
-logstash_service_group: "logstash"
+### Local service accounts
+opensearch_server_service_user: "opensearch"
+opensearch_server_service_group: "opensearch"

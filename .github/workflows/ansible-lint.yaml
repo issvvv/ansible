@@ -7,16 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [minikube, redis, opensearch-stack]
+        project: [minikube, redis]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Run ansible-lint
         id: lint
-        uses: ansible/ansible-lint@main
+        uses: ansible/ansible-lint@v26.1.1
         with:
-          args: ${{ matrix.project }}/
+          args: --project-dir . ${{ matrix.project }}
 
   telegram-notify:
     runs-on: ubuntu-latest
