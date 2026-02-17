@@ -1,1 +1,36 @@
 ---
+- name: Opensearch | Service installation
+  block:
+    - name: Setup firewalld
+      ansible.builtin.include_tasks:
+        file: firewalld.yaml
+      tags: ['linux', 'firewalld', 'always']
+
+    - name: Opensearch requirements installation
+      ansible.builtin.include_tasks:
+        file: requirements.yaml
+      tags: ['linux', 'always', 'requirements']
+
+    - name: Create Opensearch service user
+      ansible.builtin.include_tasks:
+        file: users.yaml
+      tags: ['linux', 'user']
+
+    - name: Opensearch installation
+      ansible.builtin.include_tasks:
+        file: install.yaml
+      tags: ['linux', 'always', 'installation']
+
+    - name: Check Opensearch service availability
+      ansible.builtin.include_tasks:
+        file: healthcheck.yaml
+      tags: ['linux', 'opensearch', 'healthcheck']
+
+  always:
+    - name: Remove Opensearch temporary files
+      become: true
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ defaults_opensearch_server_tmp_dir }}"

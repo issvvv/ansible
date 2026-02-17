@@ -1,0 +1,8 @@
+---
+- name: Set vm.max_map_count
+  become: true
+  ansible.posix.sysctl:
+    name: vm.max_map_count
+    value: '{{ defaults_opensearch_sysctl_vm_max_map_count }}'
+    state: present
+    reload: true

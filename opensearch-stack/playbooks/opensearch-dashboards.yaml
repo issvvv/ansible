@@ -1,5 +1,4 @@
 ---
-
 - name: Playbook for Opensearch Dashboards deploy
   hosts: "{{ host_group | default(omit) }}"
   gather_facts: true

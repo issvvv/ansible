@@ -1,5 +1,5 @@
 ---
-- name: Playbook for Data Prepper deploy
+- name: Playbook for Opensearch tarball deploy
   hosts: "{{ host_group | default(omit) }}"
   gather_facts: true
   become: false
@@ -12,6 +12,6 @@
       loop:
         - host_group
 
-    - name: Data Prepper | Including Data Prepper setup role
+    - name: Opensearch | Including Opensearch tarball setup role
       ansible.builtin.include_role:
-        name: data_prepper
+        name: opensearch

@@ -1,1 +1,16 @@
 ---
+#########################################################################################
+### OPENSEARCH ##########################################################################
+
+# TODO
+defaults_opensearch_server_service_port: 1234
+
+defaults_opensearch_sysctl_vm_max_map_count: 262144
+
+defaults_opensearch_server_tmp_dir: "/tmp/opensearch"
+
+#########################################################################################
+### FIREWALLD ###########################################################################
+
+defaults_opensearch_server_firewalld_ports:
+  - "{{ defaults_opensearch_server_service_port }}/tcp"
