@@ -4,13 +4,13 @@ galaxy_info:
   description: Playbook to setup Redis cluster for RedHat OS types.
   license: MIT
   min_ansible_version: '2.7'
-  galaxy_tags: [data-prepper]
+  galaxy_tags: [opensearch]
 
   platforms:
     - name: EL
-      versions: ['7', '8', '9', '10']
+      versions: ['7', '8', '9']
     - name: Debian
-      versions: ['bullseye', 'bookworm', 'trixie']
+      versions: ['bullseye', 'bookworm']
 
 collections:
   - ansible.posix

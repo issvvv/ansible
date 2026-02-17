@@ -9,7 +9,7 @@
         owner: "{{ opensearch_server_service_user }}"
         group: "{{ opensearch_server_service_group }}"
         mode: '0755'
-      loop: "{{ defaults_opensearch_server_directories }}"
+      loop: "{{ opensearch_server_directories }}"
 
 - name: Install | Update Opensearch service version
   block:
@@ -18,11 +18,11 @@
       become_user: "{{ opensearch_server_service_user }}"
       ansible.builtin.get_url:
         url: "{{ opensearch_server_download_url }}"
-        dest: "{{ defaults_opensearch_server_tmp_dir }}"
+        dest: "{{ opensearch_server_tmp_dir }}"
         mode: '0644'
       when:
-        - not tasks_opensearch_server_is_installed or
-          opensearch_server_version not in tasks_opensearch_server_current_version
+        - not opensearch_server_is_installed or
+          opensearch_server_version not in opensearch_server_current_version
 
     - name: Stop current Opensearch service
       become: true
@@ -30,15 +30,15 @@
         name: opensearch.service
         state: stopped
       when:
-        - tasks_opensearch_server_is_installed and
-          opensearch_server_version not in tasks_opensearch_server_current_version
+        - opensearch_server_is_installed and
+          opensearch_server_version not in opensearch_server_current_version
 
     - name: Delete existing Opensearch instance if exists
       become: true
       ansible.builtin.file:
-        path: "{{ defaults_opensearch_server_instance_dir }}/{{ item }}"
+        path: "{{ opensearch_server_instance_dir }}/{{ item }}"
         state: absent
-      with_fileglob: "{{ defaults_opensearch_server_instance_dir + '/*' }}"
+      with_fileglob: "{{ opensearch_server_instance_dir + '/*' }}"
       when:
-        - tasks_opensearch_server_is_installed and
-          opensearch_server_version not in tasks_opensearch_server_current_version
+        - opensearch_server_is_installed and
+          opensearch_server_version not in opensearch_server_current_version

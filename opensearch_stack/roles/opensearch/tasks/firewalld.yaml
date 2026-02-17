@@ -1,7 +1,7 @@
 ---
 - name: Check firewalld status
   ansible.builtin.set_fact:
-    tasks_firewalld_enabled: true
+    opensearch_firewalld_enabled: true
   when:
     - ansible_facts.services["firewalld.service"] is defined
     - ansible_facts.services["firewalld.service"].state == "running"
@@ -13,6 +13,6 @@
     zone: public
     permanent: true
     state: enabled
-  loop: "{{ defaults_opensearch_server_firewalld_ports }}"
+  loop: "{{ opensearch_server_firewalld_ports }}"
   changed_when: true
-  when: tasks_firewalld_enabled | bool
+  when: opensearch_firewalld_enabled | bool

@@ -14,4 +14,4 @@
 
     - name: Opensearch Dashboards | Including Opensearch Dashboards setup role
       ansible.builtin.include_role:
-        name: opensearch-dashboards
+        name: opensearch_dashboards

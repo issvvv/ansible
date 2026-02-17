@@ -5,7 +5,8 @@
 ### Service distribution
 opensearch_server_version: "3.5.0"
 opensearch_server_package_name: "opensearch-{{ redis_server_version }}-linux-x64.tar.gz"
-opensearch_server_download_url: "https://artifacts.opensearch.org/releases/bundle/opensearch/{{ opensearch_server_version }}/{{ opensearch_server_package_name }}"
+opensearch_base_url: "https://artifacts.opensearch.org/releases/bundle/opensearch"
+opensearch_server_download_url: "{{ opensearch_base_url }}/{{ opensearch_server_version }}/{{ opensearch_server_package_name }}"
 
 ### Opensearch service installation directory
 opensearch_server_root_dir: "/opt/opensearch"
