@@ -51,6 +51,6 @@
         dest: "{{ opensearch_server_root_dir }}"
         remote_src: true
       when:
-        - not redis_service_is_installed or
-          redis_service_version not in redis_service_current_version
-      notify: restart_redis_service
+        - not opensearch_service_is_installed or
+          opensearch_service_version not in opensearch_service_current_version
+      notify: restart_opensearch_service
