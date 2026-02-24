@@ -1,0 +1,13 @@
+---
+- name: Distribute service certificates
+  become: true
+  ansible.builtin.copy:
+    src: "{{ certificates_dir }}/opensearch/{{ item }}"
+    dest: "{{ opensearch_server_ssl_dir }}"
+    mode: '0640'
+    owner: "{{ opensearch_service_user }}"
+    group: "{{ opensearch__service_group }}"
+  loop:
+    - "opensearch.crt"
+    - "opensearch.key"
+  notify: restart_opensearch_service

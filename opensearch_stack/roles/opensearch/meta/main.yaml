@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   author: Malakhovsky Daniil (@issvvv)
-  description: Playbook to setup Redis cluster for RedHat OS types.
+  description: Playbook to setup Opensearch cluster for RedHat OS types.
   license: MIT
   min_ansible_version: '2.7'
-  galaxy_tags: [opensearch]
+  galaxy_tags: ['opensearch']
 
   platforms:
     - name: EL

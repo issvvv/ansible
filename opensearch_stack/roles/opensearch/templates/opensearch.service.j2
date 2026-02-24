@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenSearch
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User={{ opensearch_service_user }}
+Group={{ opensearch_service_group }}
+ExecStart={{ opensearch_server_bin_dir }}/opensearch
+Restart=on-failure
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

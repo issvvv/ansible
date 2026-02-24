@@ -4,9 +4,23 @@
 
 opensearch_service_port: 9200
 
+opensearch_server_root_dir: "/opt/opensearch"
+opensearch_server_tmp_dir: "/tmp/opensearch"
+opensearch_server_instance_dir: "{{ opensearch_server_root_dir }}/opensearch-{{ opensearch_server_version }}"
+opensearch_server_data_dir: "{{ opensearch_server_root_dir }}/data"
+opensearch_server_ssl_dir: "{{ opensearch_server_root_dir }}/ssl"
+opensearch_server_bin_dir: "{{ opensearch_server_root_dir }}/bin"
+opensearch_server_log_dir: "{{ opensearch_server_root_dir }}/log"
+
 opensearch_sysctl_vm_max_map_count: 262144
 
-opensearch_server_tmp_dir: "/tmp/opensearch"
+opensearch_server_directories:
+  - "{{ opensearch_server_root_dir }}"
+  - "{{ opensearch_server_data_dir }}"
+  - "{{ opensearch_server_bin_dir }}"
+  - "{{ opensearch_server_log_dir }}"
+  - "{{ opensearch_server_tmp_dir }}"
+  - "{{ opensearch_server_ssl_dir }}"
 
 #########################################################################################
 ### FIREWALLD ###########################################################################

@@ -1,33 +1,33 @@
 ---
 - name: Dashboards Installation | Download Opensearch Dashboards
+  become: true
+  become_user: "{{ opensearch_dashboards_service_user }}"
   ansible.builtin.get_url:
-    # TODO - make it better
-    url: "{{ opensearch_dashboards_distribution_repository }}"
+    url: "{{ opensearch_dashboards_service_download_url }}"
     dest: "/tmp/opensearch-dashbords-{{ opensearch_dashboards_version }}-linux-x64.tar.gz"
     mode: '0644'
-  become_user: "{{ opensearch_dashboards_service_user }}"
-  become: true
 
 - name: Dashboards Installation | Extract archive into installation directory
+  become: true
+  become_user: "{{ opensearch_dashboards_service_user }}"
   ansible.builtin.unarchive:
     src: "/tmp/opensearch-dashbords-{{ opensearch_dashboards_version }}-linux-x64.tar.gz"
     dest: "{{ opensearch_dashboards_installation_dir }}"
     remote_src: true
     mode: '0644'
-  become_user: "{{ opensearch_dashboards_service_user }}"
-  become: true
 
 - name: Dashboards Installation | Configure & setup service
   block:
     - name: Dashboards Installation | Create systemd service unit
+      become: true
       ansible.builtin.template:
         src: "opensearch-dashboards.service.j2"
         dest: "/etc/systemd/system/opensearch-dashboards.service"
         mode: '0644'
       notify: restart_dashboards
-      become: true
 
     - name: Dashboards Installation | Setup service config
+      become: true
       ansible.builtin.template:
         src: "opensearch-dashboards-config.yml.j2"
         dest: "/etc/opensearch-dashboards/opensearch_dashboards.yml"
@@ -35,19 +35,18 @@
         owner: "{{ opensearch_dashboards_service_user }}"
         group: "{{ opensearch_dashboards_service_group }}"
       notify: restart_dashboards
-      become: true
 
     - name: Dashboards Installation | Create SSL directory
+      become: true
       ansible.builtin.file:
         path: "/etc/opensearch-dashboards/ssl"
         state: directory
         mode: '0755'
         owner: "{{ opensearch_dashboards_service_user }}"
         group: "{{ opensearch_dashboards_service_group }}"
-      notify: restart_dashboards
-      become: true
 
     - name: Dashboards Installation | Extract SSL certificates
+      become: true
       ansible.builtin.copy:
         src: "elk/{{ item }}"
         dest: "/etc/opensearch-dashboards/ssl/{{ item }}"
@@ -58,4 +57,3 @@
         - dashboards.crt
         - dashboards.key
       notify: restart_dashboards
-      become: true

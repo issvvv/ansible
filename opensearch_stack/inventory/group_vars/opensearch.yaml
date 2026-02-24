@@ -2,14 +2,13 @@
 ############################################################
 ### Opensearch #############################################
 
+opensearch_cluster_name: "mycluster"
+
 ### Service distribution
 opensearch_service_version: "3.5.0"
 opensearch_service_package_name: "opensearch-{{ opensearch_service_version }}-linux-x64.tar.gz"
 repository_base_url: "https://artifacts.opensearch.org/releases/bundle/opensearch"
 opensearch_service_download_url: "{{ repository_base_url }}/{{ opensearch_service_version }}/{{ opensearch_service_package_name }}"
-
-### Opensearch service installation directory
-opensearch_server_root_dir: "/opt/opensearch"
 
 ### Local service accounts
 opensearch_service_user: "opensearch"
