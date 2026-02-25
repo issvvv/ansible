@@ -1,4 +1,7 @@
 ---
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
 - name: Verify configuration
   ansible.builtin.assert:
     that:
