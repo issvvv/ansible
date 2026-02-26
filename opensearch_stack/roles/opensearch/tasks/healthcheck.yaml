@@ -3,4 +3,5 @@
   ansible.builtin.wait_for:
     host: "{{ ansible_default_ipv4.address }}"
     port: "{{ opensearch_service_port }}"
-    timeout: 10
+    timeout: 120
+    delay: 10

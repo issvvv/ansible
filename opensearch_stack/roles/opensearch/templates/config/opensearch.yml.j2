@@ -1,5 +1,14 @@
 cluster.name: "{{ opensearch_cluster_name }}"
 node.name: "{{ inventory_hostname }}"
-node.roles: "# TODO"
-http.host: "0.0.0.0"
-discovery-type: "single-node"
+network.host: "0.0.0.0"
+{% if 'opensearch_master_node' in group_names %}
+node.roles: ["master", "ingest"]
+{% elif 'opensearch_data_node' in group_names %}
+node.roles: ["data"]
+{% endif %}
+discovery.seed_hosts: ["{{ groups['opensearch'] | map('extract', hostvars, 'ansible_host') | join('", "') }}"]
+
+plugins.security.disabled: true
+# plugins.security.ssl.http.enabled_ciphers: []
+# plugins.security.ssl.transport.enabled_ciphers: []
+# plugins.security.ssl.transport.enabled_protocols: ["TLSv1.2", "TLSv1.3"]

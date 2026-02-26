@@ -1,22 +1,22 @@
 ---
-- name: Be sure working directories exist 
-  become: true
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: "{{ opensearch_service_user }}"
-    group: "{{ opensearch_service_group }}"
-    mode: '0755'
-  loop: "{{ opensearch_server_directories }}"
+- name: Gather service facts
+  ansible.builtin.service_facts:
 
-- name: Check if OpenSearch is already installed
+- name: Check if service is already installed
   ansible.builtin.set_fact:
-    opensearch_server_is_installed: "{{ 'opensearch.service' in ansible_facts.services }}"
+    opensearch_service_is_installed: "{{ 'opensearch.service' in ansible_facts.services }}"
 
-- name: Check current Redis version
-  ansible.builtin.command: "{{ opensearch_server_bin_dir }}/opensearch --version"
+- name: Check current service version
+  ansible.builtin.uri: 
+    url: "https://{{ ansible_default_ipv4.address }}:{{ opensearch_service_port }}"
+    validate_certs: false
   changed_when: false
   failed_when: false
   check_mode: false
   register: opensearch_server_current_version_raw
-  when: opensearch_server_is_installed
+  when: opensearch_service_is_installed
+
+- name: Extract current service version
+  ansible.builtin.set_fact:
+    opensearch_service_current_version: "{{ opensearch_service_current_version_raw.json.version.number }}"
+  when: opensearch_service_is_installed
