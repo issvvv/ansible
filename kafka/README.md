@@ -1,0 +1,2 @@
+![Ansible Lint](https://github.com/issvvv/ansible/actions/workflows/ansible-lint.yml/badge.svg)
+[![Kafka Docs](https://img.shields.io/badge/Kafka-Docs-231F20?logo=apache-kafka)](https://kafka.apache.org/documentation)

@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        project: [minikube, redis]
+        project: [minikube, redis, kafka]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

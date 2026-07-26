@@ -1,0 +1,27 @@
+---
+#########################################################################################
+### KAFKA ###############################################################################
+
+kafka_server_broker_port: 9092
+kafka_server_controller_port: 9093
+
+kafka_server_tmp_dir: "/tmp/kafka"
+kafka_server_root_dir: "/opt/kafka"
+kafka_server_instance_dir: "{{ kafka_server_root_dir }}/kafka-{{ kafka_server_version }}"
+kafka_server_cert_dir: "{{ kafka_server_instance_dir }}/ssl"
+kafka_server_bin_dir: "{{ kafka_server_instance_dir }}/bin"
+kafka_server_config_dir: "{{ kafka_server_instance_dir }}/conf"
+
+kafka_server_directiories:
+  - "{{ kafka_server_root_dir }}"
+  - "{{ kafka_server_ }}"
+
+kafka_server_service_user: "kafka"
+kafka_server_service_group: "kafka"
+
+#########################################################################################
+### FIREWALLD ###########################################################################
+
+redis_server_firewalld_ports:
+  - "{{ kafka_server_broker_port }}/tcp"
+  - "{{ kafka_server_controller_port }}/tcp"
